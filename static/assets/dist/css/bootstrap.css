@@ -1427,6 +1427,8 @@ body
     font-size: 14px;
     line-height: 1.42857143;
 
+    margin-top: 100px;
+
     color: #333;
     background-color: #fff;
 }
@@ -5383,6 +5385,19 @@ select[multiple].input-group-sm > .input-group-btn > .btn
 {
     margin-top: 2px;
     margin-left: 0;
+}
+.nav-main
+{
+    margin-top: 50px;
+
+    background-color: #00305e;
+}
+.nav-main > li.active > a,
+.nav-main > li.active > a:hover,
+.nav-main > li.active > a:focus
+{
+    color: #fff;
+    background-color: #4b739b;
 }
 .nav-justified
 {

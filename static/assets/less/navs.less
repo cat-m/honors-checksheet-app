@@ -154,6 +154,23 @@
 // Nav variations
 // --------------------------------------------------
 
+.nav-main {
+  background-color: @umw-blue;
+  margin-top: 50px;
+  > li {
+
+    // Active state
+    &.active > a {
+      &,
+      &:hover,
+      &:focus {
+        color: #fff;
+        background-color: @umw-light-blue;
+      }
+    }
+  }
+}
+
 // Justified nav links
 // -------------------------
 

@@ -5,12 +5,15 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return render_template("index.html")
+    return render_template("index.html", title="Home")
   
 @app.route('/contact')
 def contact():
-    return render_template("contact.html")
-    
+    return render_template("contact.html", title="Contact")
+
+@app.route('/404')
+def errorpage():
+    return render_template("404.html", title="404")
     
 if __name__ == '__main__':
     app.run(host=os.getenv('IP', '0.0.0.0'), port=int(os.getenv('PORT', 8080)), debug=True)
