@@ -4,6 +4,7 @@ from wtforms.validators import DataRequired, Email, EqualTo
 
 from ..models import User
 
+#student registration form
 class RegistrationForm(FlaskForm):
     
     honors_id = StringField('Honors ID', validators=[DataRequired()])
