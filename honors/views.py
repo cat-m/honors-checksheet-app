@@ -1,5 +1,4 @@
-import os
-from flask import Flask, render_template
+from flask import render_template
 
 app = Flask(__name__)
 
@@ -14,6 +13,3 @@ def contact():
 @app.route('/404')
 def errorpage():
     return render_template("404.html", title="404")
-    
-if __name__ == '__main__':
-    app.run(host=os.getenv('IP', '0.0.0.0'), port=int(os.getenv('PORT', 8080)), debug=True)
