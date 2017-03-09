@@ -7,7 +7,12 @@ from . import home
 def homepage():
     return render_template('home/index.html', title="Home")
     
+@home.route('/contact')
+def contact():
+    return render_template('home/contact.html')
+    
 @home.route('/dashboard')
 @login_required
 def dashboard():
     return render_template('home/dashboard.html', title="Admin Dashboard")
+    
