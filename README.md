@@ -3,7 +3,7 @@
 
 <p>This a Python/Flask web application.</p>
 
-<h2>Necesary tools:</h2>
+<h2>Necessary tools:</h2>
 
 <ul>
     <li>Flask</li>
