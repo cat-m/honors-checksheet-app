@@ -2,7 +2,7 @@ from flask import flash, redirect, render_template, url_for
 from flask_login import login_required, login_user, logout_user
 
 from . import auth
-from forms import LoginForm, RegistrationForm
+from forms import LoginForm, RegistrationForm, ResetPasswordForm
 from .. import db
 from ..models import User
 
@@ -46,6 +46,23 @@ def login():
     
     
     return render_template('auth/login.html', form=form, title='Login')
+    
+#forgot password
+@auth.route('/forgot-password', methods=['GET', 'POST'])
+def resetpassword():
+    form = ResetPasswordForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(email=form.email.data).first()
+        if user is not None and user.verify_honorsID(form.honors_id.data):
+            
+            flash('Password reset successfully! Please check your email for your new password.')
+            return redirect(url_for('auth.login'))
+            
+        else:
+            flash('Invalid email or Honors ID.')
+        
+    return render_template('auth/login.html', form=form, title='Forgot Password')
+    
     
 #logout
 @auth.route('/logout')
