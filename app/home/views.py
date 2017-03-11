@@ -18,7 +18,7 @@ def contact():
         #change to redirect to success page
         return redirect(url_for('home.contact'))
     
-    return render_template('home/contact.html', form=form)
+    return render_template('home/contact.html', title="Contact Us", form=form)
     
 @home.route('/dashboard')
 @login_required

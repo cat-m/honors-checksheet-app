@@ -26,7 +26,7 @@ def register():
         flash('You have successfully registered! You may now login.')
         return redirect(url_for('auth.login'))
         
-    return render_template('auth/register.html', form=form, title='Register')
+    return render_template('auth/register.html', form=form, title='Create New Account')
     
 #login 
 @auth.route('/login', methods=['GET', 'POST'])

@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
@@ -9,7 +10,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Honors Program - Start Bootstrap Template</title>
+    <title>Honors Program - {{ title }}</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="../static/assets/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -41,18 +42,12 @@
 
 <body>
     <!-- .navbar -->
-     <nav class="navbar navbar-inverse navbar-fixed-top">
+     <nav class="navbar navbar-inverse">
       <div class="container">
         <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="/">UMW Honors Program Web App</a>
+          <a class="navbar-brand" href="/">UMW Honors Program</a>
         </div>
-        <div id="navbar" class="navbar-collapse collapse">
+        <div id="main-navbar" class="">
             <ul class="nav navbar-nav navbar-right">
                 {% if current_user.is_authenticated %}
                 <li>
@@ -63,7 +58,7 @@
                 </li>
                 {% else %}
                 <li>
-                    <a href="{{ url_for('auth.register') }}">Register</a>
+                    <a href="{{ url_for('auth.register') }}">Create Account</a>
                 </li>
                 <li>
                     <a href="{{ url_for('auth.login') }}">Login</a>
@@ -73,13 +68,26 @@
         </div><!--/.navbar-collapse -->
       </div>
     </nav>
-    <nav class="navbar nav-main navbar-fixed-top">
-      <!-- Collect the nav links, forms, and other content for toggling -->
+    <nav class="navbar nav-main">
       <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
                 <li>
                     <a href="{{ url_for('home.homepage') }}">Home</a>
+                </li>
+                <li>
+                    <a href="#">FAQs</a>
+                </li>
+                <li>
+                    <a href="#">Resources</a>
                 </li>
                 <li>
                     <a href="{{ url_for('home.contact') }}">Contact</a>
