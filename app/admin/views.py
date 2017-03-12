@@ -2,19 +2,20 @@ from flask import flash, redirect, render_template, url_for
 from flask_login import login_required
 
 from . import admin
-from forms import FileUploadForm
+from forms import FileUploadForm, StudentSearchForm
 from .. import db
 from ..models import User
 
 #file upload
-@admin.route('/upload', methods=['GET', 'POST'])
+@admin.route('/dashboard', methods=['GET', 'POST'])
 @login_required
-def upload():
+def dashboard():
     
-    form = FileUploadForm()
+    formUpload = FileUploadForm()
+    formSearch = StudentSearchForm()
     
-    if form.validate_on_submit():
+    if formUpload.validate_on_submit():
         flash('Upload Successful!')
-        return redirect(url_for('admin.upload'))
+        return redirect(url_for('admin.dashboard'))
         
-    return render_template('admin/upload.html', title="Upload File", form=form)
+    return render_template('admin/dashboard.html', title="Dashboard", formUpload=formUpload, formSearch=formSearch)

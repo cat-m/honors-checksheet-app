@@ -20,13 +20,9 @@ def contact():
     
     return render_template('home/contact.html', title="Contact Us", form=form)
     
-@home.route('/dashboard-admin')
+@home.route('/dashboard')
 @login_required
-def dashboard_admin():
-    return render_template('home/dashboard-admin.html', title="Admin Dashboard")
-    
-@home.route('/dashboard-student')
-@login_required
-def dashboard_student():
-    return render_template('home/dashboard-student.html', title="Student Dashboard")
+def dashboard():
+    return render_template('home/dashboard.html', title="Dashboard")
+
     
