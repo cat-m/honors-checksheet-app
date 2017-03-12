@@ -79,7 +79,7 @@ def changepassword():
     form = ChangePasswordForm()
     if form.validate_on_submit():
         user = current_user
-        if user.verify_password(form.current_password.data):
+        if user.verify_password(form.old_password.data):
             logout_user()
             flash('Password changed successfully! Please log in with your new password.')
             return redirect(url_for('auth.login'))
