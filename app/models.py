@@ -19,6 +19,7 @@ class User(UserMixin, db.Model):
     @property
     def password(self):
         raise AttributeError('password is not a readable attribute')
+        
     
     @password.setter
     def password(self, password):
@@ -26,6 +27,9 @@ class User(UserMixin, db.Model):
         
     def verify_password(self, password):
         return check_password_hash(self.password_hash, password)
+        
+    def verify_honorsID(self, given_id):
+        return self.honors_id == given_id
         
     def __repr__(self):
         return '<User: {}>'.format(self.username)

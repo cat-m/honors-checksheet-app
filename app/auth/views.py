@@ -1,8 +1,8 @@
 from flask import flash, redirect, render_template, url_for
-from flask_login import login_required, login_user, logout_user
+from flask_login import login_required, login_user, logout_user, current_user
 
 from . import auth
-from forms import LoginForm, RegistrationForm
+from forms import LoginForm, RegistrationForm, ResetPasswordForm, ChangePasswordForm
 from .. import db
 from ..models import User
 
@@ -56,3 +56,34 @@ def logout():
     flash('You have been logged out.')
     
     return redirect(url_for('auth.login'))
+        
+#forgot password
+@auth.route('/forgot-password', methods=['GET', 'POST'])
+def resetpassword():
+    form = ResetPasswordForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(email=form.email.data).first()
+        if user is not None and user.verify_honorsID(form.honors_id.data):
+            flash('Password reset successfully! Please check your email for your new password.')
+            return redirect(url_for('auth.login'))
+            
+        else:
+            flash('Invalid email or Honors ID.')
+        
+    return render_template('auth/login.html', form=form, title='Forgot Password')
+
+#change password
+@auth.route('/change-password', methods=['GET', 'POST'])
+@login_required
+def changepassword():
+    form = ChangePasswordForm()
+    if form.validate_on_submit():
+        user = current_user
+        if user.verify_password(form.old_password.data):
+            logout_user()
+            flash('Password changed successfully! Please log in with your new password.')
+            return redirect(url_for('auth.login'))
+        else:
+            flash('Password incorrect!')
+        
+    return render_template('auth/login.html', form=form, title='Change Password')
