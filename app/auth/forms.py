@@ -39,3 +39,10 @@ class ResetPasswordForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
     honors_id = StringField('Honors ID', validators=[DataRequired()])
     submit = SubmitField('Reset Password')
+    
+# Form for User to change password from their account
+class ChangePasswordForm(FlaskForm):
+    old_password = PasswordField('Password', validators=[DataRequired()])
+    new_password = PasswordField('Password', validators=[DataRequired(), EqualTo('confirm_password')])
+    confirm_password = PasswordField('Password', validators=[DataRequired()])
+    submit = SubmitField('Change Password')
