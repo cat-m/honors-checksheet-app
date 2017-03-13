@@ -30,7 +30,7 @@
     <style>
       /*  UMW OFFICIAL BLUE: #00305e
           UMW OFFICIAL GRAY: #686663
-          
+          UMW Footer H3 :#b81237 - Museo Slab font
           (not supposed to mix the two secondary palettes)
           
           from official muted palette:
@@ -64,15 +64,12 @@
         <div id="main-navbar" class="">
             <ul class="nav navbar-nav navbar-right">
                 {% if current_user.is_authenticated %}
-                    {% if current_user.is_admin %}
-                    <li>
-                        <a href="{{ url_for('admin.dashboard') }}">Dashboard</a>
-                    </li>
-                    {% else %}
-                    <li>
-                        <a href="{{ url_for('home.dashboard') }}">Dashboard</a>
-                    </li>
-                    {% endif%}
+                <li>
+                    <a href="{{ url_for('admin.dashboard') }}">Admin Dashboard</a>
+                </li>
+                <li>
+                    <a href="{{ url_for('home.dashboard') }}">Dashboard</a>
+                </li>
                 <li>
                     <a href="{{ url_for('auth.logout') }}">Logout</a>
                 </li>
