@@ -8,15 +8,30 @@ from ..models import User
 
 
 #file upload
-@admin.route('/dashboard', methods=['GET', 'POST'])
+@admin.route('/upload', methods=['GET', 'POST'])
 @login_required
-def dashboard():
+def upload():
     
     formUpload = FileUploadForm()
-    formSearch = StudentSearchForm()
+
     
     if formUpload.validate_on_submit():
         flash('Upload Successful!')
-        return redirect(url_for('admin.dashboard'))
+        return redirect(url_for('home.admin_dashboard'))
         
-    return render_template('admin/dashboard.html', title="Dashboard", formUpload=formUpload, formSearch=formSearch)
+    return render_template('admin/upload.html', title="Upload", formUpload=formUpload)
+    
+#search for student
+@admin.route('/search', methods=['GET', 'POST'])
+@login_required
+def search():
+    
+    formSearch = StudentSearchForm()
+
+    
+    if formSearch.validate_on_submit():
+        
+        return redirect(url_for('home.admin_dashboard'))
+        
+    return render_template('admin/search.html', title="Search", formSearch=formSearch)
+    

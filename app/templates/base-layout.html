@@ -64,12 +64,21 @@
         <div id="main-navbar" class="">
             <ul class="nav navbar-nav navbar-right">
                 {% if current_user.is_authenticated %}
-                <li>
-                    <a href="{{ url_for('admin.dashboard') }}">Admin Dashboard</a>
-                </li>
-                <li>
-                    <a href="{{ url_for('home.dashboard') }}">Dashboard</a>
-                </li>
+                    {% if current_user.is_admin %}
+                        <li>
+                            <a href="{{ url_for('home.admin_dashboard') }}">Admin Dashboard</a>
+                        </li> 
+                        <li>
+                            <a href="{{ url_for('admin.upload') }}">Upload</a>
+                        </li> 
+                        <li>
+                            <a href="{{ url_for('admin.search') }}">Search</a>
+                        </li> 
+                    {% else %}
+                        <li>
+                            <a href="{{ url_for('home.dashboard') }}">Dashboard</a>
+                        </li>
+                    {% endif%}
                 <li>
                     <a href="{{ url_for('auth.logout') }}">Logout</a>
                 </li>

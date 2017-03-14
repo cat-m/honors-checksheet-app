@@ -18,24 +18,7 @@
         <!-- Content Row -->
         <div class="row">
             <div class="col-lg-12">
-                <!-- Map Column -->
-                <ul class="nav nav-tabs">
-                  <li class="active"><a data-toggle="tab" href="#upload">Upload File</a></li>
-                  <li><a data-toggle="tab" href="#search">Search Students</a></li>
-                </ul>
-    
-                <div class="tab-content">
-                  <div id="upload" class="tab-pane fade in active">
-                    <h3>Upload File</h3>
-                    <p>Upload a new Honors Program data file. </p>
-                        {% block upload %}{% endblock %}
-                  </div>
-                  <div id="search" class="tab-pane fade">
-                    <h3>Search</h3>
-                    <p>Search for a student by name.</p>
-                        {% block search %}{% endblock %}
-                  </div>
-                </div>
+                <p>Hi, {{ current_user.username }}!</p>
             </div>
         </div>
     </div>
