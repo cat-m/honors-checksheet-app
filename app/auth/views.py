@@ -16,7 +16,6 @@ def register():
         
         user = User(honors_id = form.honors_id.data,
                     email=form.email.data,
-                    username=form.username.data,
                     first_name=form.last_name.data,
                     password=form.password.data)
                     
