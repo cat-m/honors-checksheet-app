@@ -24,6 +24,7 @@ def contact():
 def dashboard():
     return render_template('home/dashboard.html', title="Dashboard")
 
+
 @home.route('/admin/dashboard')
 @login_required
 def admin_dashboard():
