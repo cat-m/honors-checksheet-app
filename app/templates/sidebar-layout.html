@@ -112,7 +112,7 @@
                         <div class="sidebar-default sidebar" style="padding-top: 40px;" role="navigation">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    Menu
+                                    <h3>Menu</h3>
                                 </div>
                                 <div class="panel-body">
                                     <div class="sidebar-nav navbar-collapse">
@@ -146,6 +146,24 @@
                                     </div>
                                 </div>
                             </div>
+                            {% if current_user.is_authenticated %}
+                            <div class="panel panel-default" background-color=#d12627>
+                                <div class="panel-heading">
+                                  <h3>Upcoming Deadlines</h3>
+                                </div>
+                                
+                                <div class="panel-body">
+                                  <h4><strong>March 27, 2017</strong></h4>
+                                  <li>Fall 2017 Advance Registration Begins</li>
+                                  <p></p>
+                                  
+                                  <h4><strong>April 7, 2017</strong></h4>
+                                  <li>Fall 2017 Advance Registration Ends</li>
+                                  <p></p>
+                                </div>
+                            </div>
+                            {% endif %}
+                            
                         </div>
                     </div>
                 </div>
