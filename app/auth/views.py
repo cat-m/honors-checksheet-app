@@ -28,27 +28,28 @@ def register():
     return render_template('auth/register.html', form=form, title='Create New Account')
     
 #login 
-@auth.route('/login', methods=['GET', 'POST'])
+@auth.route('/', methods=['GET', 'POST'])
 def login():
     
-    form = LoginForm()
-    if form.validate_on_submit():
+    formLogin = LoginForm()
+    if formLogin.validate_on_submit():
         
-        user = User.query.filter_by(email=form.email.data).first()
+        user = User.query.filter_by(email=formLogin.email.data).first()
 
-        if user is not None and user.verify_password(form.password.data):
+        if user is not None and user.verify_password(formLogin.password.data):
             login_user(user)
             
             if user.is_admin:
                 return redirect(url_for('home.admin_dashboard'))
             else:
-                return redirect(url_for('home.dashboard'))
+                return redirect(url_for('home.mypage'))
             
         else:
             flash('Invalid email or password.')
     
     
-    return render_template('auth/login.html', form=form, title='Login')
+    return render_template('home/index.html', formLogin=formLogin, title='Login')
+    
     
 #logout
 @auth.route('/logout')
@@ -59,6 +60,7 @@ def logout():
     flash('You have been logged out.')
     
     return redirect(url_for('auth.login'))
+       
         
 #forgot password
 @auth.route('/forgot-password', methods=['GET', 'POST'])

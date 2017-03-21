@@ -55,40 +55,7 @@
 </head>
 
 <body>
-    <!-- .navbar -->
-     <nav class="navbar navbar-inverse">
-      <div class="container">
-        <div class="navbar-header">
-          <a class="navbar-brand" href="/">UMW Honors Program</a>
-        </div>
-        <div id="main-navbar" class="">
-            <ul class="nav navbar-nav navbar-right">
-                {% if current_user.is_authenticated %}
-                    {% if current_user.is_admin %}
-                        <li>
-                            <a href="{{ url_for('home.admin_dashboard') }}">Dashboard</a>
-                        </li> 
-
-                    {% else %}
-                        <li>
-                            <a href="{{ url_for('home.dashboard') }}">Dashboard</a>
-                        </li>
-                    {% endif%}
-                <li>
-                    <a href="{{ url_for('auth.logout') }}">Logout</a>
-                </li>
-                {% else %}
-                <li>
-                    <a href="{{ url_for('auth.register') }}">Create Account</a>
-                </li>
-                <li>
-                    <a href="{{ url_for('auth.login') }}">Login</a>
-                </li>
-                {% endif %}
-            </ul>
-        </div><!--/.navbar-collapse -->
-      </div>
-    </nav>
+       <!-- .navbar -->
     <nav class="navbar nav-main">
       <div class="container">
         <div class="navbar-header">
@@ -105,14 +72,22 @@
                     <a href="{{ url_for('home.homepage') }}">Home</a>
                 </li>
                 <li>
-                    <a href="#">FAQs</a>
-                </li>
-                <li>
-                    <a href="#">Resources</a>
-                </li>
-                <li>
                     <a href="{{ url_for('home.contact') }}">Contact</a>
                 </li>
+                {% if current_user.is_authenticated %}
+                    {% if current_user.is_admin %}
+                        <li>
+                            <a href="{{ url_for('home.admin_dashboard') }}">Admin Dashboard</a>
+                        </li> 
+                    {% else %}
+                        <li>
+                            <a href="{{ url_for('home.mypage') }}">MyPage</a>
+                        </li>
+                    {% endif%}
+                <li>
+                    <a href="{{ url_for('auth.logout') }}">Logout</a>
+                </li>
+                {% endif %}
             </ul>
         </div>
         <!-- /.navbar-collapse -->
@@ -156,7 +131,7 @@
                                                     </li> 
                                                 {% else %}
                                                     <li>
-                                                        <a href="{{ url_for('home.dashboard') }}">Dashboard</a>
+                                                        <a href="{{ url_for('home.mypage') }}">MyPage</a>
                                                     </li>
                                                 {% endif%}
                                             <li>
