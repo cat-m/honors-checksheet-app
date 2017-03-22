@@ -9,7 +9,6 @@ class RegistrationForm(FlaskForm):
     
     honors_id = StringField('Honors ID', validators=[DataRequired()])
     email = StringField('Email', validators=[DataRequired(), Email()])
-    username = StringField('Username', validators=[DataRequired()])
     first_name = StringField('First Name', validators=[DataRequired()])
     last_name = StringField('Last Name', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired(), 
@@ -24,9 +23,9 @@ class RegistrationForm(FlaskForm):
             raise ValidationError('Email is already in use.')
     
     #check to see if the username is already in the database
-    def validate_username(self, field):
-        if User.query.filter_by(username=field.data).first():
-            raise ValidationError('Username is already in use.')
+   # def validate_username(self, field):
+    #    if User.query.filter_by(username=field.data).first():
+     #       raise ValidationError('Username is already in use.')
    
 #login form on login page         
 class LoginForm(FlaskForm):
@@ -38,7 +37,6 @@ class LoginForm(FlaskForm):
 # Form for User to reset forgotten password    
 class ResetPasswordForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Email()])
-    username = StringField('Username', validators=[DataRequired()])
     honors_id = StringField('Honors ID', validators=[DataRequired()])
     submit = SubmitField('Reset Password')
     
