@@ -50,8 +50,68 @@ class Role(db.Model):
     description = db.Column(db.String(200))
     users = db.relationship('User', backref='role', lazy='dynamic')
     
+    def __repr__(self):
+        return '<Role: {}>'.format(self.name)
     
-def __repr__(self):
-    return '<Role: {}>'.format(self.name)
+class Checksheet(db.Model):
+    
+    __tablename__ = 'checksheets'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    lastName = db.Column(db.String(60), index=True)
+    firstName = db.Column(db.String(60), index=True)
+    honors_id = db.Column(db.String(60), index=True, unique=True)
+    email = db.Column(db.String(60), unique=True, index=True)
+    admitted = db.Column(db.String(60))
+    dupontCode = db.Column(db.Integer)
+    status = db.Column(db.String(60))
+    comments = db.Column(db.String(60))
+    term = db.Column(db.String(60))
+    coCur1 = db.Column(db.String(200))
+    coCurDate1 = db.Column(db.Date())
+    coCur2 = db.Column(db.String(200))
+    coCurDate2 = db.Column(db.Date())
+    coCur3 = db.Column(db.String(200))
+    coCurDate3 = db.Column(db.Date())
+    coCur4 = db.Column(db.String(200))
+    coCurDate4 = db.Column(db.Date())
+    coCur5 = db.Column(db.String(200))
+    coCurDate5 = db.Column(db.Date())
+    coCur6 = db.Column(db.String(200))
+    coCurDate6 = db.Column(db.Date())
+    coCur7 = db.Column(db.String(200))
+    coCurDate7 = db.Column(db.Date())
+    coCur8 = db.Column(db.String(200))
+    coCurDate8 = db.Column(db.Date())
+    fsemHN = db.Column(db.String(60))
+    fsemHNDate = db.Column(db.String(60))
+    hnCourse1 = db.Column(db.String(60))
+    hnCourse1Date = db.Column(db.String(60))
+    hnCourse2 = db.Column(db.String(60))
+    hnCourse2Date = db.Column(db.String(60))
+    hnCourse3 = db.Column(db.String(60))
+    hnCourse3Date = db.Column(db.String(60))
+    hnCourse4 = db.Column(db.String(60))
+    hnCourse4Date = db.Column(db.String(60))
+    hnCourse5 = db.Column(db.String(60))
+    hnCourse5Date = db.Column(db.String(60))
+    researchCourse = db.Column(db.String(60))
+    researchCourse = db.Column(db.String(60))
+    capstoneCourse = db.Column(db.String(60))
+    capstoneCourse = db.Column(db.String(60))
+    hon201 = db.Column(db.String(60))
+    hon201 = db.Column(db.String(60))
+    leadership = db.Column(db.String(60))
+    mentoring = db.Column(db.String(60))
+    portfolio1 = db.Column(db.String(60))
+    portfolio2 = db.Column(db.String(60))
+    portfolio3 = db.Column(db.String(60))
+    portfolio4 = db.Column(db.String(60))
+    exit = db.Column(db.String(60))
+    
+    def __repr__(self):
+        return '<Checksheet: {}>'.format(self.name)
+    
+    
     
     

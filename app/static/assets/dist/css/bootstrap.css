@@ -1553,11 +1553,11 @@ h6,
 .h5,
 .h6
 {
-    font-family: inherit;
+    font-family: Georgia, 'Times New Roman', Times, serif;
     font-weight: 500;
     line-height: 1.1;
 
-    color: inherit;
+    color: #00305e;
 }
 h1 small,
 h2 small,
