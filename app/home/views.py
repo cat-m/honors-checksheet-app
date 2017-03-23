@@ -31,6 +31,13 @@ def contact():
 def mypage():
     return render_template('home/mypage.html', title="My Page")
 
+#route to user's checksheet
+@home.route('/checksheet')
+#@login_required
+def checksheet():
+    return render_template('home/view-checksheet.html', title="My Checksheet")
+
+
 
 @home.route('/admin/dashboard')
 @login_required
