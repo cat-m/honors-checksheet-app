@@ -1,5 +1,6 @@
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
+from datetime import datetime
 
 from app import db, login_manager
 
@@ -11,17 +12,16 @@ class User(UserMixin, db.Model):
     honors_id = db.Column(db.String(60), index=True, unique=True)
     email = db.Column(db.String(60), index=True, unique=True)
     username = db.Column(db.String(60), index=True, unique=True)
-    first_name = db.Column(db.String(60), index=True)
-    last_name = db.Column(db.String(60), index=True)
     password_hash = db.Column(db.String(128))
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
-    is_admin = db.Column(db.Boolean, default=False)
+    is_admin = db.Column(db.Boolean, nullable=False, default=False)
+    is_confirmed = db.Column(db.Boolean, nullable=False, default=False)
+    confirmed_on = db.Column(db.DateTime, nullable=True, default=None)
 
     @property
     def password(self):
         raise AttributeError('password is not a readable attribute')
         
-    
     @password.setter
     def password(self, password):
         self.password_hash = generate_password_hash(password)
@@ -31,7 +31,7 @@ class User(UserMixin, db.Model):
         
     def verify_honorsID(self, given_id):
         return self.honors_id == given_id
-        
+
     def __repr__(self):
         return '<User: {}>'.format(self.username)
         
@@ -52,6 +52,26 @@ class Role(db.Model):
     
     def __repr__(self):
         return '<Role: {}>'.format(self.name)
+    
+class Announcement(db.Model):
+    
+    __tablename__ = 'announcements'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(60))
+    description = db.Column(db.String(200))
+    date_time = db.Column(db.DateTime)
+    
+    def _repr(self):
+        return '<Announcement: {}>'.format(self.title)
+        
+class ImportantDate(db.Model):
+    
+    __tablename__ = 'important_dates'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    info = db.Column(db.String(200))
+    date_time = db.Column(db.Date())
     
 class Checksheet(db.Model):
     
@@ -96,11 +116,11 @@ class Checksheet(db.Model):
     hnCourse5 = db.Column(db.String(60))
     hnCourse5Date = db.Column(db.String(60))
     researchCourse = db.Column(db.String(60))
-    researchCourse = db.Column(db.String(60))
+    researchCourseDate = db.Column(db.String(60))
     capstoneCourse = db.Column(db.String(60))
-    capstoneCourse = db.Column(db.String(60))
+    capstoneCourseDate = db.Column(db.String(60))
     hon201 = db.Column(db.String(60))
-    hon201 = db.Column(db.String(60))
+    hon201Date = db.Column(db.String(60))
     leadership = db.Column(db.String(60))
     mentoring = db.Column(db.String(60))
     portfolio1 = db.Column(db.String(60))
@@ -108,10 +128,10 @@ class Checksheet(db.Model):
     portfolio3 = db.Column(db.String(60))
     portfolio4 = db.Column(db.String(60))
     exit = db.Column(db.String(60))
+
     
     def __repr__(self):
-        return '<Checksheet: {}>'.format(self.name)
+        return '<Checksheet: {}>'.format(self.honors_id)
     
-    
-    
+
     

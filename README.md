@@ -11,6 +11,9 @@
     <li>flask_login</li>
     <li>flask-migrate</li>
     <li>A MySQL database</li>
+    <li>Flask-Mail</li>
+    <li>datetime</li>
+    <li>itsdangerous</li>
 </ul>
 
 <h2>Database setup</h2>
@@ -20,3 +23,6 @@
 In this file, you will add the secret key and database URI for your database.</p>
 <p>Finally, you will need to run flask db init, flask db migrate, then flask db upgrade.</p>
 
+<code>flask db init</code>
+<code>flask db migrate</code>
+<code>flask db upgrade</code>

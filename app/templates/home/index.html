@@ -20,7 +20,7 @@
               <br />
               {{ wtf.quick_form(formLogin) }}
               <br />
-              <a href="/forgot-password">Forgot Password</a>
+              <a href="{{ url_for('auth.forgotpassword') }}">Forgot Password</a>
             </div>
           </div>
         </div>

@@ -1,7 +1,6 @@
 {% import "bootstrap/utils.html" as utils %}
 {% import "bootstrap/wtf.html" as wtf %}
 {% extends "base-layout.html" %}
-{% block title %}{{ title }}{% endblock %}
 {% block content %}
 
     <div class="container">
@@ -30,7 +29,7 @@
                             
                             {% if  title  == "Login" %}
                             <br />
-                            <a href="/forgot-password">Forgot Password</a>
+                            <a href="{{ url_for('auth.reset-password') }}">Forgot Password</a>
                             {% endif %}
                             
                         </div>

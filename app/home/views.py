@@ -1,11 +1,12 @@
 from flask import flash, redirect, render_template, url_for, abort
-from flask_login import login_required, current_user, login_user, logout_user, current_user
+from flask_login import login_required, current_user, login_user, logout_user
 
 
 from . import home
 from forms import ContactForm, LoginForm
 from .. import db
-from ..models import User
+from ..models import User, Checksheet
+from app.decorators import check_confirmed
 
 @home.route('/', methods=['GET', 'POST'])
 def homepage():
@@ -28,15 +29,20 @@ def contact():
 #route to user's dashboard
 @home.route('/mypage')
 @login_required
+@check_confirmed
 def mypage():
     return render_template('home/mypage.html', title="My Page")
 
+
 #route to user's checksheet
 @home.route('/checksheet')
-#@login_required
+@login_required
+@check_confirmed
 def checksheet():
-    return render_template('home/view-checksheet.html', title="My Checksheet")
-
+    user_honors_id = current_user.honors_id
+    user_checksheet = Checksheet.query.filter_by(honors_id=user_honors_id).first()
+   
+    return render_template('home/view-checksheet.html', title="My Checksheet", checksheet=user_checksheet)
 
 
 @home.route('/admin/dashboard')
