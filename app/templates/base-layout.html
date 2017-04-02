@@ -84,10 +84,10 @@
                             <a href="{{ url_for('home.mypage') }}">MyPage</a>
                         </li>
                     {% endif%}
+                {% elif current_user.is_authenticated %}
                 <li>
                     <a href="{{ url_for('auth.logout') }}">Logout</a>
                 </li>
-                {% elif current_user.is_authenticated %}
                 <li>
                     <a href"{{ url_for('auth.unconfirmed') }}">Confirm</a>
                 </li>

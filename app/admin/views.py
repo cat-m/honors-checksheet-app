@@ -27,16 +27,14 @@ def upload():
             flash('no file part')
             return redirect(request.url)
         file = request.files['file'].read()
-        checksheet = pd.read_csv(file, error_bad_lines=False)
-
-        for row in checksheet:
-            print(row)
-        
-        
+        checksheet = pd.read_csv(file)
+        #for row in checksheet:
+            #print(row)
+        checksheet.to_sql('checksheets', con=db.engine, if_exits='append', index=False)
         sql = text("INSERT INTO 'checksheets' ('lastName', 'firstName', 'honors_id', 'email', 'admitted', 'dupontCode', 'status', 'comments', 'term', 'coCur1', 'coCurDate1', 'coCur2', 'coCurDate2', 'coCur3', 'coCurDate3', 'coCur4', 'coCurDate4', 'coCur5', 'coCurDate5', 'coCur6', 'coCurDate6', 'coCur7', 'coCurDate7', 'coCur8', 'coCurDate8', 'fsemHN', 'fsemHNDate', 'hnCourse1', 'hnCourse1Date', 'hnCourse2', 'hnCourse2Date', 'hnCourse3', 'hnCourse3Date', 'hnCourse4', 'hnCourse4Date', 'hnCourse5', 'hnCourse5Date', 'researchCourse', 'researchCourseDate', 'capstoneCourse', 'capstoneCourseDate', 'hon201', 'hon201Date', 'leadership', 'mentoring', 'portfolio4', 'portfolio1', 'portfolio2', 'portfolio3', 'exit') VALUES ('?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?', '?');")
-        result = db.engine.execute(sql)
-        for row in result:
-            ourData.append(row)
+        #result = db.engine.execute(sql)
+        #for row in result:
+            #checksheet.append(row)
         flash('Upload Successful!')
         return redirect(url_for('admin.upload'))
         
