@@ -98,7 +98,7 @@ class Checksheet(db.Model):
     lastName = db.Column(db.String(60), index=True)
     firstName = db.Column(db.String(60), index=True)
     honors_id = db.Column(db.String(60), index=True, unique=True)
-    email = db.Column(db.String(60), unique=True, index=True)
+    email = db.Column(db.String(60), index=True)
     admitted = db.Column(db.String(60))
     dupontCode = db.Column(db.Integer)
     status = db.Column(db.String(60))
