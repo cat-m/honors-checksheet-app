@@ -17,12 +17,11 @@
             </div>
         </div>
         <!-- /.row -->
-
+        {{ utils.flashed_messages() }}
         <!-- Content Row -->
         <div class="row">
             <!-- Map Column -->
             <div class="col-md-8">
-                 {{ utils.flashed_messages() }}
                 <h3>Send us a Message</h3>
                 {{ wtf.quick_form(form) }}
             </div>
