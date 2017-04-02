@@ -70,8 +70,25 @@ class ImportantDate(db.Model):
     __tablename__ = 'important_dates'
     
     id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(60))
     info = db.Column(db.String(200))
     date_time = db.Column(db.Date())
+    
+    def _repr(self):
+        return '<Important Date: {}>'.format(self.title)
+        
+class Contact(db.Model):
+    
+    __tablename__ = 'contacts'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(200))
+    email = db.Column(db.String(60))
+    phone = db.Column(db.String(60))
+    message = db.Column(db.String(200))
+    
+    def _repr(self):
+        return '<Contact: {}>'.format(self.name)
     
 class Checksheet(db.Model):
     

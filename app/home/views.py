@@ -5,8 +5,9 @@ from flask_login import login_required, current_user, login_user, logout_user
 from . import home
 from forms import ContactForm, LoginForm
 from .. import db
-from ..models import User, Checksheet
+from ..models import User, Checksheet, Contact
 from app.decorators import check_confirmed
+from app.email import send_email
 
 @home.route('/', methods=['GET', 'POST'])
 def homepage():
@@ -14,14 +15,28 @@ def homepage():
             
     return render_template('home/index.html', title="Home")
     
-    
+#route to contact page with contact form
 @home.route('/contact', methods=['GET', 'POST'])
 def contact():
     
     form = ContactForm()
     if form.validate_on_submit():
         #add send email to admin functionality
+        contact = Contact(
+            name = form.name.data,
+            email = form.email.data,
+            phone = form.phone.data,
+            message = form.message.data,
+        )
+        db.session.add(contact)
+        db.session.commit()
+        
+        html = render_template('home/confirm_contact.html', name=contact.name, email=contact.email, phone=contact.phone, message=contact.message)
+        subject = "UMW Honors - Thank you for contacting us!"
+        send_email(contact.email, subject, html)
+        
         #change to redirect to success page
+        flash('Contact form successfully submitted!', 'success')
         return redirect(url_for('home.contact'))
     
     return render_template('home/contact.html', title="Contact Us", form=form)

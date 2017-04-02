@@ -1,6 +1,6 @@
+{% import "bootstrap/utils.html" as utils %}
 {% import "bootstrap/wtf.html" as wtf %}
 {% extends "base-layout.html" %}
-{% block title %}Contact Us{% endblock %}
 {% block content %}
     <div class="container">
         <!-- Page Heading/Breadcrumbs -->
@@ -22,6 +22,7 @@
         <div class="row">
             <!-- Map Column -->
             <div class="col-md-8">
+                 {{ utils.flashed_messages() }}
                 <h3>Send us a Message</h3>
                 {{ wtf.quick_form(form) }}
             </div>
