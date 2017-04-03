@@ -33,7 +33,6 @@ def confirm_email(token):
 def unconfirmed():
     if current_user.is_confirmed:
         return redirect('home.mypage')
-    flash('Please confirm your account!', 'warning')
     return render_template('auth/unconfirmed.html', title="Unconfirmed")
     
 #register
@@ -57,7 +56,6 @@ def register():
         
         login_user(user)
         
-        flash('You have successfully registered! Please check your email to confirm your account.', 'success')
         return redirect(url_for('home.mypage'))
         
     return render_template('auth/register.html', form=form, title='Create New Account')
