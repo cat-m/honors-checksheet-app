@@ -65,13 +65,13 @@ def announcement():
         abort(403)
     addAnnouncement = AddAnnouncementForm()
     if addAnnouncement.validate_on_submit():
-                announcement = Announcement(honors_id = form.honors_id.data,
-                    title=form.title.data,
-                    description=form.description.data,
-                    date=form.date.data,
-                    is_confirmed=False)
+        announcement = Announcement(honors_id = form.honors_id.data,
+            title=form.title.data,
+            description=form.description.data,
+            date=form.date.data,
+            is_confirmed=False)
         db.session.add(announcement)
         db.session.commit()
-      return render_template('admin/announcement.html', title="Announcement", addAnnouncement=addAnnouncement)
+    return render_template('admin/announcement.html', title="Announcement", addAnnouncement=addAnnouncement)
 
 
