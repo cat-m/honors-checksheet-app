@@ -116,7 +116,7 @@ class Checksheet(db.Model):
     coCur4 = db.Column(db.String(200))
     coCurDate4 = db.Column(db.String(60))
     coCur5 = db.Column(db.String(200))
-    coCurDate5 = db.Column(db.String(60)
+    coCurDate5 = db.Column(db.String(60))
     coCur6 = db.Column(db.String(200))
     coCurDate6 = db.Column(db.String(60))
     coCur7 = db.Column(db.String(200))

@@ -37,6 +37,7 @@ class LoginForm(FlaskForm):
 
 # Form logged in User to change password
 class ChangePasswordForm(FlaskForm):
+    old_password = PasswordField('Current Password', validators=[DataRequired()])
     new_password1 = PasswordField('New Password', validators=[DataRequired()])
     new_password2 = PasswordField('New Password', validators=[DataRequired(), EqualTo('new_password1')])
     submit = SubmitField('Change Password')
@@ -47,7 +48,6 @@ class ResetPasswordEmailForm(FlaskForm):
     
 # Form for User to request a password change if they have forgotten
 class ResetPasswordForm(FlaskForm):
-    old_password = PasswordField('Current Password', validators=[DataRequired()])
     new_password = PasswordField('New Password', validators=[DataRequired(), EqualTo('confirm_password')])
     confirm_password = PasswordField('Confirm New Password', validators=[DataRequired()])
     submit = SubmitField('Reset Password')
