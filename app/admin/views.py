@@ -48,7 +48,16 @@ def search():
         abort(403)
     formSearch = StudentSearchForm()
     if formSearch.validate_on_submit():
-        return redirect(url_for('admin.search'))
+        return redirect(url_for('admin.checksheet'))
         
     return render_template('admin/search.html', title="Search", formSearch=formSearch)
-    
+
+#route to student's checksheet
+@admin.route('/checksheet', methods=['GET','POST'])
+@login_required
+#@check_confirmed
+def checksheet():
+    student_honors_id = current_user.honors_id
+    student_checksheet = Checksheet.query.filter_by(honors_id=student_honors_id).first()
+   
+    return render_template('home/view-checksheet.html', title="Student's Checksheet", checksheet=student_checksheet)
