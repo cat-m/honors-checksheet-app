@@ -47,13 +47,8 @@ def search():
         #throw a 403 error. we could do a custom error page later.
         abort(403)
     formSearch = StudentSearchForm()
-    
     if formSearch.validate_on_submit():
-        student_honors_id = formSearch.studentID.data
-        student_checksheet = Checksheet.query.filter_by(honors_id=student_honors_id).first()
-        title = "Student %s's Checksheet" % student_honors_id
-        
-        return render_template('home/view-checksheet.html', title=title, checksheet=student_checksheet)
+        return redirect(url_for('admin.checksheet'))
         
     return render_template('admin/search.html', title="Search", formSearch=formSearch)
 
@@ -65,13 +60,20 @@ def announcement():
         abort(403)
     addAnnouncement = AddAnnouncementForm()
     if addAnnouncement.validate_on_submit():
-        announcement = Announcement(honors_id = form.honors_id.data,
-            title=form.title.data,
-            description=form.description.data,
-            date=form.date.data,
-            is_confirmed=False)
-        db.session.add(announcement)
-        db.session.commit()
+                    announcement = Announcement(title=addAnnouncement.title.data,
+                    description=addAnnouncement.description.data,
+                    date=addAnnouncement.date.data)
+    db.session.add(announcement)
+    db.session.commit()
     return render_template('admin/announcement.html', title="Announcement", addAnnouncement=addAnnouncement)
 
+#route to student's checksheet
+@admin.route('/checksheet', methods=['GET','POST'])
+@login_required
+#@check_confirmed
+def checksheet():
+    student_honors_id = current_user.honors_id
+    student_checksheet = Checksheet.query.filter_by(honors_id=student_honors_id).first()
+   
+    return render_template('home/view-checksheet.html', title="Student's Checksheet", checksheet=student_checksheet)
 
