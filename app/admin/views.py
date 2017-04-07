@@ -10,7 +10,7 @@ import csv
 from . import admin
 from forms import FileUploadForm, StudentSearchForm, AddAnnouncementForm
 from .. import db
-from ..models import User, Checksheet
+from ..models import User, Checksheet, Announcement
 
     
 #file upload
