@@ -9,7 +9,7 @@ import csv
 
 
 from . import admin
-from forms import FileUploadForm, StudentSearchForm
+from forms import FileUploadForm, StudentSearchForm, AddAnnouncementForm
 from .. import db
 from ..models import User, Checksheet
 
@@ -55,4 +55,20 @@ def search():
         return redirect(url_for('admin.search'))
         
     return render_template('admin/search.html', title="Search", formSearch=formSearch)
-    
+
+@admin.route('/announcement', methods=['GET', 'POST'])
+@login_required
+def announcement():
+    if not current_user.is_admin:
+        #throw a 403 error. we could do a custom error page later.
+        abort(403)
+    addAnnouncement = AddAnnouncementForm()
+    if addAnnouncement.validate_on_submit():
+                announcement = Announcement(honors_id = form.honors_id.data,
+                    title=form.title.data,
+                    description=form.description.data,
+                    date=form.date.data,
+                    is_confirmed=False)
+        db.session.add(announcement)
+        db.session.commit()
+      return render_template('admin/announcement.html', title="Announcement", addAnnouncement=addAnnouncement)
