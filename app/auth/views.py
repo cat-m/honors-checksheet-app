@@ -29,7 +29,7 @@ def confirm_email(token):
     return redirect(url_for('home.mypage'))
 
 #check that user token created and email matches email in database
-@auth.route('/update-password/<token>')
+@auth.route('/update-password/<token>', methods=['GET', 'POST'])
 def update_password(token):
     try:
         email = confirm_token(token)
@@ -37,11 +37,19 @@ def update_password(token):
         flash('The reset password link is invalid or has expaired.', 'danger')
         
     user = User.query.filter_by(email=email).first_or_404()
-    flash('You have confirmed your account. You may now reset your password')
+    flash('You have confirmed your account. You may now reset your password', 'success')
     
-    login_user(user)
+    form = ResetPasswordForm()
+    
+    if form.validate_on_submit():
+
+        user.password = form.new_password.data
+        db.session.add(user)
+        db.session.commit()
+        flash('Password reset successful, you may now login.', 'success')
+        return redirect(url_for('auth.login'))
         
-    return redirect(url_for('auth.resetpassword'))
+    return render_template('auth/reset-password.html', title="Reset Password", form=form)
     
 #unconfirmed
 @auth.route('/unconfirmed')
@@ -70,8 +78,6 @@ def register():
         html = render_template('auth/activate.html', confirm_url=confirm_url)
         subject = "UMW Honors - Please confirm your email"
         send_email(user.email, subject, html)
-        
-        login_user(user)
         
         flash('You have successfully registered! Please check your email to confirm your account.', 'success')
         return redirect(url_for('home.mypage'))
@@ -125,20 +131,6 @@ def forgotpassword():
         
     return render_template('auth/forgot-password.html', form=form, title='Forgot Password')
 
-    
-#reset forgotten password
-@auth.route('/reset-password', methods=['GET', 'POST'])
-@login_required
-def resetpassword():
-    form = ResetPasswordForm()
-    user = current_user
-    if form.validate_on_submit():
-        user.password = form.new_password.data
-        db.session.add(user)
-        db.session.commit()
-        flash('Password reset successful', 'success')
-
-    return render_template('auth/reset-password.html', form=form, title='Reset Password')
     
 #change password
 @auth.route('/change-password', methods=['GET', 'POST'])
