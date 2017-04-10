@@ -67,6 +67,7 @@
           </button>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
+        <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
                 <li>
                     <a href="{{ url_for('home.homepage') }}">Home</a>
@@ -74,7 +75,7 @@
                 <li>
                     <a href="{{ url_for('home.contact') }}">Contact</a>
                 </li>
-                {% if current_user.is_authenticated %}
+                {% if current_user.is_confirmed and current_user.is_authenticated %}
                     {% if current_user.is_admin %}
                         <li>
                             <a href="{{ url_for('home.admin_dashboard') }}">Admin Dashboard</a>
@@ -85,7 +86,17 @@
                         </li>
                     {% endif%}
                 <li>
+                    <a href="{{ url_for('auth.changepassword') }}">Change password</a>
+                </li>
+                <li>
                     <a href="{{ url_for('auth.logout') }}">Logout</a>
+                </li>
+                {% elif current_user.is_authenticated %}
+                <li>
+                    <a href="{{ url_for('auth.logout') }}">Logout</a>
+                </li>
+                <li>
+                    <a href"{{ url_for('auth.unconfirmed') }}">Confirm</a>
                 </li>
                 {% endif %}
             </ul>

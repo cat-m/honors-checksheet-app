@@ -20,17 +20,13 @@ class RegistrationForm(FlaskForm):
     #check to see if the honors_id is already in the database if no, error
     def validate_honors_id(self, field):
         honors = User.query.filter_by(email=field.data).first()
-        if honors is None:
-            raise ValidationError('That Honors ID is not in the database. Please check your Honors ID and try again.')
+        #if honors is None:
+            #raise ValidationError('That Honors ID is not in the database. Please check your Honors ID and try again.')
 
     #check to see if the email address is already in the database. if yes, error
     def validate_email(self, field):
         if User.query.filter_by(email=field.data).first():
             raise ValidationError('Email account is already in use.')
-            
-        found = Checksheet.query.filter_by(email=field.data).first()
-        if found is None:
-            raise ValidationError('Email account not valid.')
     
 #login form on login page         
 class LoginForm(FlaskForm):
@@ -41,7 +37,6 @@ class LoginForm(FlaskForm):
 
 # Form logged in User to change password
 class ChangePasswordForm(FlaskForm):
-    old_password = PasswordField('Current Password', validators=[DataRequired()])
     new_password1 = PasswordField('New Password', validators=[DataRequired()])
     new_password2 = PasswordField('New Password', validators=[DataRequired(), EqualTo('new_password1')])
     submit = SubmitField('Change Password')

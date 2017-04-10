@@ -133,6 +133,7 @@ def resetpassword():
         user.password = form.new_password.data
         db.session.add(user)
         db.session.commit()
+        flash('Password reset successful', 'success')
         
     return render_template('auth/reset-password.html', form=form, title='Reset Password')
         
@@ -141,14 +142,11 @@ def resetpassword():
 @login_required
 def changepassword():
     form = ChangePasswordForm()
+    user = current_user
     if form.validate_on_submit():
-        if current_user.password == form.old_password.data:
-            current_user.password = form.new_password.data
-            db.session.add(user)
-            db.session.commit()
-        else: 
-            flash('Current password does not match password on file.', 'danger')
-            
-    
-        
+        user.password = form.new_password1.data
+        db.session.add(user)
+        db.session.commit()
+        flash('Password reset successful.', 'success')
+
     return render_template('auth/change-password.html', form=form, title='Change Password')
