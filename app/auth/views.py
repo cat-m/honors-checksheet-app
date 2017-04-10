@@ -129,7 +129,7 @@ def forgotpassword():
 @auth.route('/reset-password', methods=['GET', 'POST'])
 @login_required
 def resetpassword():
-    form = ChangePasswordForm()
+    form = ResetPasswordForm()
     user = current_user
     if form.validate_on_submit():
         user.password = form.new_password.data
