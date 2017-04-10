@@ -8,6 +8,7 @@ from ..models import User
 from ..token import generate_confirmation_token, confirm_token
 from app.email import send_email
 
+#check that token created and email matches an email in the database
 @auth.route('/confirm/<token>')
 @login_required
 def confirm_email(token):
@@ -146,7 +147,7 @@ def changepassword():
     form = ChangePasswordForm()
     user = current_user
     if form.validate_on_submit():
-        user.password = form.new_password1.data
+        user.password = form.new_password.data
         db.session.add(user)
         db.session.commit()
         flash('Password reset successful.', 'success')
