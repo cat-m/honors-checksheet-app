@@ -26,6 +26,21 @@ def confirm_email(token):
         flash('You have confirmed your account. Thank You!', 'success')
         
     return redirect(url_for('home.mypage'))
+
+#check that user token created and email matches email in database
+@auth.route('/update-password/<token>')
+def update_password(token):
+    try:
+        email = confirm_token(token)
+    except:
+        flash('The reset password link is invalid or has expaired.', 'danger')
+        
+    user = User.query.filter_by(email=email).first_or_404()
+    flash('You have confirmed your account. You may now reset your password')
+    
+    login_user(user)
+        
+    return redirect(url_for('auth.resetpassword'))
     
 #unconfirmed
 @auth.route('/unconfirmed')
@@ -90,15 +105,25 @@ def logout():
     
     return redirect(url_for('auth.login'))
       
-#forgot password 
-
+#forgot password send email confirmation
 @auth.route('/forgot-password', methods=['GET', 'POST'])
 def forgotpassword():
     form = ResetPasswordEmailForm()
     if form.validate_on_submit():
-        flash('Please check your email for a reset link.')
+
+        user = User.query.filter_by(email=form.email.data).first()
+        if user is not None:
+            token = generate_confirmation_token(user.email)
+            confirm_url = url_for('auth.update_password', token=token, _external=True)
+            html = render_template('auth/forgot-password-email.html', confirm_url=confirm_url)
+            subject = "UMW Honors - Please confirm your email account."
+            send_email(user.email, subject, html)
+            flash('Please check your email for a reset link.')
+        else: 
+            flash('There is no account associated with that email address.', 'danger')
         
     return render_template('auth/forgot-password.html', form=form, title='Forgot Password')
+
     
 #reset forgotten password
 @auth.route('/reset-password', methods=['GET', 'POST'])
