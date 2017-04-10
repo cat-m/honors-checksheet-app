@@ -8,9 +8,9 @@ import csv
 
 
 from . import admin
-from forms import FileUploadForm, StudentSearchForm
+from forms import FileUploadForm, StudentSearchForm, AddAnnouncementForm
 from .. import db
-from ..models import User, Checksheet
+from ..models import User, Checksheet, Announcement
 
     
 #file upload
@@ -48,7 +48,38 @@ def search():
         abort(403)
     formSearch = StudentSearchForm()
     if formSearch.validate_on_submit():
-        return redirect(url_for('admin.search'))
+        student_honors_id = formSearch.studentID.data
+        student_checksheet = Checksheet.query.filter_by(honors_id=student_honors_id).first()
+        title = "Student %s's Checksheet" % student_honors_id
+ 
+        return render_template('home/view-checksheet.html', title=title, checksheet=student_checksheet)
+        
+        #return redirect(url_for('admin.checksheet'))
         
     return render_template('admin/search.html', title="Search", formSearch=formSearch)
-    
+
+@admin.route('/announcement', methods=['GET', 'POST'])
+@login_required
+def announcement():
+    if not current_user.is_admin:
+        #throw a 403 error. we could do a custom error page later.
+        abort(403)
+    addAnnouncement = AddAnnouncementForm()
+    if addAnnouncement.validate_on_submit():
+                    announcement = Announcement(title=addAnnouncement.title.data,
+                    description=addAnnouncement.description.data,
+                    date=addAnnouncement.date.data)
+    db.session.add(announcement)
+    db.session.commit()
+    return render_template('admin/announcement.html', title="Announcement", addAnnouncement=addAnnouncement)
+
+#route to student's checksheet
+@admin.route('/checksheet', methods=['GET','POST'])
+@login_required
+#@check_confirmed
+def checksheet():
+    student_honors_id = current_user.honors_id
+    student_checksheet = Checksheet.query.filter_by(honors_id=student_honors_id).first()
+   
+    return render_template('home/view-checksheet.html', title="Student's Checksheet", checksheet=student_checksheet)
+

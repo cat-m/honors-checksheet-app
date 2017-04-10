@@ -12,7 +12,16 @@ class FileUploadForm(FlaskForm):
 #file upload form for adding data to database
 class StudentSearchForm(FlaskForm):
     
-    studentName = TextField('Student Name', validators=[DataRequired()])
+    studentID = TextField('Student Honors ID', validators=[DataRequired()])
     submit = SubmitField('Search')
+
+#announcement upload form for adding announcement to database    
+class AddAnnouncementForm(FlaskForm):
     
+    title = TextField('Title', validators=[DataRequired()])
+    description = TextField('Description', validators=[DataRequired()])
+    date_time = TextField('Date', validators=[DataRequired()])
+    submit = SubmitField('Add Announcement')
+
+
 
