@@ -66,10 +66,10 @@ def announcement():
         abort(403)
     addAnnouncement = AddAnnouncementForm()
     if addAnnouncement.validate_on_submit():
-                    announcement = Announcement(title=addAnnouncement.title.data,
+        announcement = Announcement(title=addAnnouncement.title.data,
                     description=addAnnouncement.description.data)
-    db.session.add(announcement)
-    db.session.commit()
+        db.session.add(announcement)
+        db.session.commit()
     return render_template('admin/announcement.html', title="Announcement", addAnnouncement=addAnnouncement)
 
 #route to student's checksheet
