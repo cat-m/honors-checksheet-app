@@ -60,7 +60,7 @@ class Announcement(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(60))
     description = db.Column(db.String(200))
-    date = db.Column(db.Date, nullable=False)
+    created = db.Column(db.DateTime, nullable=False, default=None)
     
     def _repr(self):
         return '<Announcement: {}>'.format(self.title)

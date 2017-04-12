@@ -1,8 +1,10 @@
+{% import "bootstrap/utils.html" as utils %}
 {% import "bootstrap/wtf.html" as wtf %}
-{% extends "sidebar-layout.html" %}
+{% extends "base-layout.html" %}
 {% block content %}
 
         <!-- Page Heading/Breadcrumbs -->
+
         <div class="row">
             <div class="col-lg-12">
                 <h1 class="page-header">{{ title }}
@@ -17,9 +19,64 @@
         </div>
         <div class="row">
             <div class="col-lg-12">
+                <div class="btn-group">
+                    {% if current_user.is_authenticated %}
+                        {% if current_user.is_admin %}
+                                <a href="{{ url_for('admin.upload') }}"><button type="button" class="btn btn-default">Upload</button></a>
+                                <a href="{{ url_for('admin.search') }}"><button type="button" class="btn btn-default">Search</button></a>
+                                <a href="{{ url_for('admin.add_announcement') }}"><button type="button" class="btn btn-default">Add Announcement</button></a>
+                        {% endif%}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                {{ utils.flashed_messages() }}
+                <div class="col-lg-6">
 
-                <p>Welcome to the UMW Honors Program administrator Dashboard! Please use the menu at the right to choose an option. </p>
+                    <h3>Deadlines</h3>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-md-10">
+                                    <h4>Title</h4>
+                                </div>
+                                <div class="col-md-2">
+                                    <a href="#"><span class="fa fa-trash-o"></span></a>
+                                    <a href="#"><span class="fa fa-pencil-square-o"></span></a>  
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            Deadline Description
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
 
+                    <h3>Announcements</h3>
+                    {% if announcements %}
+                    {% for announcement in announcements %}
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-md-10">
+                                    <h4>{{ announcement.title }}</h4>
+                                </div>
+                                <div class="col-md-2">
+                                    <a href="{{ url_for('admin.edit_announcement', id=announcement.id) }}"><span class="fa fa-pencil-square-o"></span></a>
+                                    <a href="{{ url_for('admin.delete_announcement', id=announcement.id) }}"><span class="fa fa-trash-o"></span></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            {{ announcement.description }}
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                </div>
             </div>
         </div>
 

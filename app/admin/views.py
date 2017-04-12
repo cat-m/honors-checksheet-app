@@ -1,6 +1,7 @@
 from flask import flash, redirect, request, render_template, url_for, abort
 from flask_login import login_required, current_user
 from flask_sqlalchemy import sqlalchemy
+import datetime
 from sqlalchemy import text
 from werkzeug.utils import secure_filename
 import pandas as pd
@@ -8,7 +9,7 @@ import csv
 
 
 from . import admin
-from forms import FileUploadForm, StudentSearchForm, AddAnnouncementForm
+from forms import FileUploadForm, StudentSearchForm, AnnouncementForm
 from .. import db
 from ..models import User, Checksheet, Announcement
 
@@ -58,21 +59,63 @@ def search():
         
     return render_template('admin/search.html', title="Search", formSearch=formSearch)
 
-@admin.route('/announcement', methods=['GET', 'POST'])
+@admin.route('/announcement/add', methods=['GET', 'POST'])
 @login_required
-def announcement():
+def add_announcement():
     if not current_user.is_admin:
         #throw a 403 error. we could do a custom error page later.
         abort(403)
-    addAnnouncement = AddAnnouncementForm()
-    if addAnnouncement.validate_on_submit():
-        announcement = Announcement(title=addAnnouncement.title.data,
-                    description=addAnnouncement.description.data,
-                    date=addAnnouncement.date.data)
+    add_announcement = True
+    
+    form = AnnouncementForm()
+    if form.validate_on_submit():
+        announcement = Announcement(title=form.title.data,
+                    description=form.description.data,
+                    created=datetime.datetime.now())
         db.session.add(announcement)
         db.session.commit()
-    return render_template('admin/announcement.html', title="Announcement", addAnnouncement=addAnnouncement)
+        flash('Announcement successfully added!', 'success')
+        
+    return render_template('admin/announcement.html', title="Add Announcement", action="Add", add_announcement=add_announcement, form=form)
 
+#edit an announcement
+@admin.route('/announcement/edit/<int:id>', methods=['GET', 'POST'])
+@login_required
+def edit_announcement(id):
+    if not current_user.is_admin:
+        abort(403)
+        
+    add_announcement = False
+    
+    announcement = Announcement.query.get_or_404(id)
+    form = AnnouncementForm(obj=announcement)
+    if form.validate_on_submit():
+        announcement.title = form.title.data
+        announcement.description = form.description.data
+        db.session.commit()
+        flash('You have sucessfully edited the announcement.', 'success')
+    
+        
+    form.title.data = announcement.title
+    form.description.data = announcement.description
+    
+    return render_template('admin/announcement.html', title="Edit Announcement", action="Edit", add_announcement=add_announcement, form=form, announcement=announcement)
+        
+#delete an announcement
+@admin.route('/announcement/delete/<int:id>', methods=['GET', 'POST'])
+@login_required
+def delete_announcement(id):
+    if not current_user.is_admin:
+        abort(403)
+    
+    announcement = Announcement.query.get_or_404(id)
+    db.session.delete(announcement)
+    db.session.commit()
+    flash('You have successfully deleted the announcement.', 'success')
+    
+    return redirect(url_for('home.admin_dashboard'))
+    
+    
 #route to student's checksheet
 @admin.route('/checksheet', methods=['GET','POST'])
 @login_required
