@@ -20,7 +20,6 @@ class AddAnnouncementForm(FlaskForm):
     
     title = TextField('Title', validators=[DataRequired()])
     description = TextField('Description', validators=[DataRequired()])
-    date = TextField('Date', validators=[DataRequired()])
     submit = SubmitField('Add Announcement')
 
 

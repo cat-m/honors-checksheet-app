@@ -67,8 +67,7 @@ def announcement():
     addAnnouncement = AddAnnouncementForm()
     if addAnnouncement.validate_on_submit():
                     announcement = Announcement(title=addAnnouncement.title.data,
-                    description=addAnnouncement.description.data,
-                    date=addAnnouncement.date.data)
+                    description=addAnnouncement.description.data)
     db.session.add(announcement)
     db.session.commit()
     return render_template('admin/announcement.html', title="Announcement", addAnnouncement=addAnnouncement)

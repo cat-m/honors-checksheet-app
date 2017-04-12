@@ -1,6 +1,6 @@
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
-from datetime import datetime
+import datetime
 
 from app import db, login_manager
 
@@ -60,7 +60,8 @@ class Announcement(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(60))
     description = db.Column(db.String(200))
-    date = db.Column(db.Date, nullable=False)
+    datetime = db.Column(db.DateTime, default=datetime.datetime.utcnow)
+  #  date = db.Column(db.Date, nullable=False)
     
     def _repr(self):
         return '<Announcement: {}>'.format(self.title)

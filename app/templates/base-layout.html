@@ -79,6 +79,9 @@
                         <li>
                             <a href="{{ url_for('home.admin_dashboard') }}">Admin Dashboard</a>
                         </li> 
+                        <li>
+                             <a href="{{ url_for('admin.announcement') }}">Add Announcement</a>
+                        </li> 
                     {% else %}
                         <li>
                             <a href="{{ url_for('home.mypage') }}">MyPage</a>
@@ -92,7 +95,7 @@
                 </li>
                 {% elif current_user.is_authenticated %}
                 <li>
-                    <a href"{{ url_for('auth.unconfirmed') }}">Confirm</a>
+                    <a href="{{ url_for('auth.unconfirmed') }}">Confirm</a>
                 </li>
                 {% endif %}
             </ul>
