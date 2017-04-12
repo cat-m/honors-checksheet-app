@@ -143,5 +143,7 @@ def changepassword():
             db.session.add(user)
             db.session.commit()
             flash('Password reset successful.', 'success')
+        else: 
+            flash('Old password field incorrect.', 'danger')
     
     return render_template('auth/change-password.html', form=form, title='Change Password')
