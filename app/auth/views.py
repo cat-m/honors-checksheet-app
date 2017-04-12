@@ -138,9 +138,10 @@ def changepassword():
     form = ChangePasswordForm()
     user = current_user
     if form.validate_on_submit():
-        user.password = form.new_password.data
-        db.session.add(user)
-        db.session.commit()
-        flash('Password reset successful.', 'success')
+        if user.verify_password(form.old_password.data):
+            user.password = form.new_password.data
+            db.session.add(user)
+            db.session.commit()
+            flash('Password reset successful.', 'success')
     
     return render_template('auth/change-password.html', form=form, title='Change Password')
