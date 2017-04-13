@@ -36,26 +36,6 @@
                 {{ utils.flashed_messages() }}
                 <div class="col-lg-6">
 
-                    <h3>Deadlines</h3>
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <div class="row">
-                                <div class="col-md-10">
-                                    <h4>Title</h4>
-                                </div>
-                                <div class="col-md-2">
-                                    <a href="#"><span class="fa fa-trash-o"></span></a>
-                                    <a href="#"><span class="fa fa-pencil-square-o"></span></a>  
-                                </div>
-                            </div>
-                        </div>
-                        <div class="panel-body">
-                            Deadline Description
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-
                     <h3>Announcements</h3>
                     {% if announcements %}
                     {% for announcement in announcements %}
@@ -79,6 +59,33 @@
                     {% endfor %}
                     {% endif %}
                 </div>
+
+                <div class="col-lg-6">
+
+                    <h3>Deadlines</h3>
+                    {% if dates %}
+                    {% for date in dates %}
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-md-10">
+                                    <h4>{{ date.title }}</h4>
+                                </div>
+                                <div class="col-md-2">
+                                    <a href="{{ url_for('admin.edit_date', id=date.id) }}"><span class="fa fa-pencil-square-o"></span></a>
+                                    <a href="{{ url_for('admin.delete_date', id=date.id) }}"><span class="fa fa-trash-o"></span></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <p>{{ date.date_time }}</p>
+                            <p>{{ date.info }}</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+
             </div>
         </div>
 

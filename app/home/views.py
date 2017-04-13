@@ -5,7 +5,7 @@ from flask_login import login_required, current_user, login_user, logout_user
 from . import home
 from forms import ContactForm, LoginForm
 from .. import db
-from ..models import User, Checksheet, Contact, Announcement
+from ..models import User, Checksheet, Contact, Announcement, ImportantDate
 from app.decorators import check_confirmed
 from app.email import send_email
 
@@ -72,6 +72,7 @@ def admin_dashboard():
         abort(403)
         
     announcements = Announcement.query.all()
+    dates = ImportantDate.query.all()
     
-    return render_template('home/admin_dashboard.html', title="Dashboard", announcements=announcements)
+    return render_template('home/admin_dashboard.html', title="Dashboard", announcements=announcements, dates=dates)
     

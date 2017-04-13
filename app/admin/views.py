@@ -138,6 +138,44 @@ def add_date():
         
     return render_template('admin/edit-dates.html', title="Add Date", action="Add", add_date=add_date, form=form)    
 
+#edit an important date
+@admin.route('/date/edit/<int:id>', methods=['GET', 'POST'])
+@login_required
+def edit_date(id):
+    if not current_user.is_admin:
+        abort(403)
+        
+    add_date = False
+    
+    date = ImportantDate.query.get_or_404(id)
+    form = DateForm(obj=date)
+    if form.validate_on_submit():
+        date.title = form.title.data
+        date.description = form.description.data
+        date.date_time=form.date.data
+        db.session.commit()
+        flash('You have sucessfully edited the date.', 'success')
+    
+        
+    form.title.data = date.title
+    form.description.data = date.description
+    
+    return render_template('admin/edit-dates.html', title="Edit Date", action="Edit", add_date=add_date, form=form, date=date)
+        
+#delete an important date
+@admin.route('/date/delete/<int:id>', methods=['GET', 'POST'])
+@login_required
+def delete_date(id):
+    if not current_user.is_admin:
+        abort(403)
+    
+    date = ImportantDate.query.get_or_404(id)
+    db.session.delete(date)
+    db.session.commit()
+    flash('You have successfully deleted the date.', 'success')
+    
+    return redirect(url_for('home.admin_dashboard'))
+
 
 #route to student's checksheet
 @admin.route('/checksheet', methods=['GET','POST'])
