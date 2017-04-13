@@ -75,6 +75,7 @@ def add_announcement():
         db.session.add(announcement)
         db.session.commit()
         flash('Announcement successfully added!', 'success')
+        return redirect(url_for('home.admin_dashboard'))
         
     return render_template('admin/announcement.html', title="Add Announcement", action="Add", add_announcement=add_announcement, form=form)
 
@@ -127,12 +128,13 @@ def add_date():
         
     form = DateForm()
     if form.validate_on_submit():
-        date = ImportantDate(title=form.title.data,
-                    description=form.description.data,
-                    date=form.date.data)
-        db.session.add(date)
+        newDate = ImportantDate(title=form.title.data,
+                    info=form.description.data,
+                    date_time=form.date.data)
+        db.session.add(newDate)
         db.session.commit()
         flash('Date successfully added!', 'success')
+        return redirect(url_for('home.admin_dashboard'))
         
     return render_template('admin/edit-dates.html', title="Add Date", action="Add", add_date=add_date, form=form)    
 
