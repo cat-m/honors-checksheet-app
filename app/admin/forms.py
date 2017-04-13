@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import SubmitField, ValidationError, TextField, FileField, DateTimeField
+from wtforms import SubmitField, ValidationError, TextField, FileField, DateField
 from wtforms.validators import DataRequired
 
 
@@ -27,7 +27,7 @@ class DateForm(FlaskForm):
     
     title = TextField('Title', validators=[DataRequired()])
     description = TextField('Description', validators=[DataRequired()])
-    date = DateTimeField('Date', validators=[DataRequired()])
+    date = DateField('Date', validators=[DataRequired()])
     submit = SubmitField('Submit')
 
 
