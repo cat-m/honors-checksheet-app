@@ -8,9 +8,9 @@ import csv
 
 
 from . import admin
-from forms import FileUploadForm, StudentSearchForm, AddAnnouncementForm
+from forms import FileUploadForm, StudentSearchForm, AddAnnouncementForm, AddDateForm
 from .. import db
-from ..models import User, Checksheet, Announcement
+from ..models import User, Checksheet, Announcement, ImportantDate
 
     
 #file upload
@@ -72,6 +72,22 @@ def announcement():
         db.session.add(announcement)
         db.session.commit()
     return render_template('admin/announcement.html', title="Announcement", addAnnouncement=addAnnouncement)
+
+
+@admin.route('/edit-dates', methods=['GET', 'POST'])
+@login_required
+def editDates():
+    if not current_user.is_admin:
+        #throw a 403 error. we could do a custom error page later.
+        abort(403)
+    addDate = AddDateForm()
+    if addDate.validate_on_submit():
+        date = ImportantDate(title=addDate.title.data,
+                    description=addDate.description.data,
+                    date=addDate.date.data)
+        db.session.add(date)
+        db.session.commit()
+    return render_template('admin/edit-dates.html', title="EditDates", addDate=addDate)
 
 #route to student's checksheet
 @admin.route('/checksheet', methods=['GET','POST'])
