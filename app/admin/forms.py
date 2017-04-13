@@ -16,12 +16,11 @@ class StudentSearchForm(FlaskForm):
     submit = SubmitField('Search')
 
 #announcement upload form for adding announcement to database    
-class AddAnnouncementForm(FlaskForm):
+class AnnouncementForm(FlaskForm):
     
     title = TextField('Title', validators=[DataRequired()])
     description = TextField('Description', validators=[DataRequired()])
-    date = TextField('Date', validators=[DataRequired()])
-    submit = SubmitField('Add Announcement')
+    submit = SubmitField('Submit')
     
 #form for adding dates to database
 class AddDateForm(FlaskForm):
@@ -30,6 +29,7 @@ class AddDateForm(FlaskForm):
     description = TextField('Description', validators=[DataRequired()])
     date = DateField('Date', validators=[DataRequired()])
     submit = SubmitField('Add Date')
+
 
 
 

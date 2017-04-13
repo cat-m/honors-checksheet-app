@@ -5,7 +5,7 @@ from flask_login import login_required, current_user, login_user, logout_user
 from . import home
 from forms import ContactForm, LoginForm
 from .. import db
-from ..models import User, Checksheet, Contact
+from ..models import User, Checksheet, Contact, Announcement
 from app.decorators import check_confirmed
 from app.email import send_email
 
@@ -46,7 +46,10 @@ def contact():
 @login_required
 @check_confirmed
 def mypage():
-    return render_template('home/mypage.html', title="My Page")
+    
+    announcements = Announcement.query.all()
+    
+    return render_template('home/mypage.html', title="My Page", announcements=announcements)
 
 
 #route to user's checksheet
@@ -62,11 +65,13 @@ def checksheet():
 
 @home.route('/admin/dashboard')
 @login_required
+@check_confirmed
 def admin_dashboard():
 
     if not current_user.is_admin:
-        #throw a 403 error. we could do a custom error page later.
         abort(403)
+        
+    announcements = Announcement.query.all()
     
-    return render_template('home/admin_dashboard.html', title="Dashboard")
+    return render_template('home/admin_dashboard.html', title="Dashboard", announcements=announcements)
     
