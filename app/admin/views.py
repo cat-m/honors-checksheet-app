@@ -9,7 +9,7 @@ import csv
 
 
 from . import admin
-from forms import FileUploadForm, StudentSearchForm, AnnouncementForm, AddDateForm
+from forms import FileUploadForm, StudentSearchForm, AnnouncementForm, DateForm
 from .. import db
 from ..models import User, Checksheet, Announcement, ImportantDate
 
@@ -79,23 +79,6 @@ def add_announcement():
     return render_template('admin/announcement.html', title="Add Announcement", action="Add", add_announcement=add_announcement, form=form)
 
 
-
-@admin.route('/edit-dates', methods=['GET', 'POST'])
-@login_required
-def editDates():
-    if not current_user.is_admin:
-        #throw a 403 error. we could do a custom error page later.
-        abort(403)
-    addDate = AddDateForm()
-    if addDate.validate_on_submit():
-        date = ImportantDate(title=addDate.title.data,
-                    description=addDate.description.data,
-                    date=addDate.date.data)
-        db.session.add(date)
-        db.session.commit()
-    return render_template('admin/edit-dates.html', title="EditDates", addDate=addDate)
-
-
 #edit an announcement
 @admin.route('/announcement/edit/<int:id>', methods=['GET', 'POST'])
 @login_required
@@ -132,8 +115,28 @@ def delete_announcement(id):
     flash('You have successfully deleted the announcement.', 'success')
     
     return redirect(url_for('home.admin_dashboard'))
-    
-    
+
+
+@admin.route('/date/add', methods=['GET', 'POST'])
+@login_required
+def add_date():
+    if not current_user.is_admin:
+        #throw a 403 error. we could do a custom error page later.
+        abort(403)
+    add_date = True
+        
+    form = DateForm()
+    if form.validate_on_submit():
+        date = ImportantDate(title=form.title.data,
+                    description=form.description.data,
+                    date=form.date.data)
+        db.session.add(date)
+        db.session.commit()
+        flash('Date successfully added!', 'success')
+        
+    return render_template('admin/edit-dates.html', title="Add Date", action="Add", add_date=add_date, form=form)    
+
+
 #route to student's checksheet
 @admin.route('/checksheet', methods=['GET','POST'])
 @login_required
