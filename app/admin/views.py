@@ -9,11 +9,7 @@ import csv
 
 
 from . import admin
-<<<<<<< HEAD
-from forms import FileUploadForm, StudentSearchForm, AddAnnouncementForm, AddDateForm
-=======
-from forms import FileUploadForm, StudentSearchForm, AnnouncementForm
->>>>>>> 64c7f01a2054a266b0f81cfa8beaebcc9ca19d55
+from forms import FileUploadForm, StudentSearchForm, AnnouncementForm, AddDateForm
 from .. import db
 from ..models import User, Checksheet, Announcement, ImportantDate
 
