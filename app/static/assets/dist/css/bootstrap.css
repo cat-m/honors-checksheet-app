@@ -2067,6 +2067,10 @@ pre code
     padding-right: 15px;
     padding-left: 15px;
 }
+.container .flashed-messages
+{
+    max-width: 500px;
+}
 @media (min-width: 768px)
 {
     .container
