@@ -9,9 +9,9 @@ import csv
 
 
 from . import admin
-from forms import FileUploadForm, StudentSearchForm, AnnouncementForm
+from forms import FileUploadForm, StudentSearchForm, AnnouncementForm, DateForm
 from .. import db
-from ..models import User, Checksheet, Announcement
+from ..models import User, Checksheet, Announcement, ImportantDate
 
     
 #file upload
@@ -85,8 +85,10 @@ def add_announcement():
         db.session.add(announcement)
         db.session.commit()
         flash('Announcement successfully added!', 'success')
+        return redirect(url_for('home.admin_dashboard'))
         
     return render_template('admin/announcement.html', title="Add Announcement", action="Add", add_announcement=add_announcement, form=form)
+
 
 #edit an announcement
 @admin.route('/announcement/edit/<int:id>', methods=['GET', 'POST'])
@@ -124,8 +126,67 @@ def delete_announcement(id):
     flash('You have successfully deleted the announcement.', 'success')
     
     return redirect(url_for('home.admin_dashboard'))
+
+
+@admin.route('/date/add', methods=['GET', 'POST'])
+@login_required
+def add_date():
+    if not current_user.is_admin:
+        #throw a 403 error. we could do a custom error page later.
+        abort(403)
+    add_date = True
+        
+    form = DateForm()
+    if form.validate_on_submit():
+        newDate = ImportantDate(title=form.title.data,
+                    info=form.description.data,
+                    date_time=form.date.data)
+        db.session.add(newDate)
+        db.session.commit()
+        flash('Date successfully added!', 'success')
+        return redirect(url_for('home.admin_dashboard'))
+        
+    return render_template('admin/edit-dates.html', title="Add Date", action="Add", add_date=add_date, form=form)    
+
+#edit an important date
+@admin.route('/date/edit/<int:id>', methods=['GET', 'POST'])
+@login_required
+def edit_date(id):
+    if not current_user.is_admin:
+        abort(403)
+        
+    add_date = False
     
+    date = ImportantDate.query.get_or_404(id)
+    form = DateForm(obj=date)
+    if form.validate_on_submit():
+        date.title = form.title.data
+        date.description = form.description.data
+        date.date_time=form.date.data
+        db.session.commit()
+        flash('You have sucessfully edited the date.', 'success')
     
+        
+    form.title.data = date.title
+    form.description.data = date.description
+    
+    return render_template('admin/edit-dates.html', title="Edit Date", action="Edit", add_date=add_date, form=form, date=date)
+        
+#delete an important date
+@admin.route('/date/delete/<int:id>', methods=['GET', 'POST'])
+@login_required
+def delete_date(id):
+    if not current_user.is_admin:
+        abort(403)
+    
+    date = ImportantDate.query.get_or_404(id)
+    db.session.delete(date)
+    db.session.commit()
+    flash('You have successfully deleted the date.', 'success')
+    
+    return redirect(url_for('home.admin_dashboard'))
+
+
 #route to student's checksheet
 @admin.route('/checksheet', methods=['GET','POST'])
 @login_required
