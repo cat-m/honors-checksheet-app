@@ -20,9 +20,6 @@ class AnnouncementForm(FlaskForm):
     
     title = TextField('Title', validators=[DataRequired()])
     description = TextField('Description', validators=[DataRequired()])
-<<<<<<< HEAD
-    submit = SubmitField('Add Announcement')
-=======
     submit = SubmitField('Submit')
     
 #form for adding dates to database
@@ -33,7 +30,6 @@ class DateForm(FlaskForm):
     date = DateField('Date', validators=[DataRequired()])
     submit = SubmitField('Submit')
 
->>>>>>> ea5d48543b2683a433dffa9edcc4062454983340
 
 
 

@@ -75,12 +75,6 @@ def add_announcement():
     if not current_user.is_admin:
         #throw a 403 error. we could do a custom error page later.
         abort(403)
-<<<<<<< HEAD
-    addAnnouncement = AddAnnouncementForm()
-    if addAnnouncement.validate_on_submit():
-        announcement = Announcement(title=addAnnouncement.title.data,
-                    description=addAnnouncement.description.data)
-=======
     add_announcement = True
     
     form = AnnouncementForm()
@@ -88,7 +82,6 @@ def add_announcement():
         announcement = Announcement(title=form.title.data,
                     description=form.description.data,
                     created=datetime.datetime.now())
->>>>>>> ea5d48543b2683a433dffa9edcc4062454983340
         db.session.add(announcement)
         db.session.commit()
         flash('Announcement successfully added!', 'success')
