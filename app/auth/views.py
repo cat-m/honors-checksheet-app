@@ -34,7 +34,7 @@ def update_password(token):
     try:
         email = confirm_token(token)
     except:
-        flash('The reset password link is invalid or has expaired.', 'danger')
+        flash('The reset password link is invalid or has expired.', 'danger')
         
     user = User.query.filter_by(email=email).first_or_404()
     flash('You have confirmed your account. You may now reset your password', 'success')
@@ -143,6 +143,10 @@ def changepassword():
             db.session.add(user)
             db.session.commit()
             flash('Password reset successful.', 'success')
+            if user.is_admin:
+                return redirect(url_for('home.admin_dashboard'))
+            else:
+                return redirect(url_for('home.mypage'))
         else: 
             flash('Old password field incorrect.', 'danger')
     

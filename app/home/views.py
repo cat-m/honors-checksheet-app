@@ -11,9 +11,10 @@ from app.email import send_email
 
 @home.route('/', methods=['GET', 'POST'])
 def homepage():
-
+    
+    dates = ImportantDate.query.all()
             
-    return render_template('home/index.html', title="Home")
+    return render_template('home/index.html', title="Home",dates=dates)
     
 #route to contact page with contact form
 @home.route('/contact', methods=['GET', 'POST'])
@@ -48,8 +49,9 @@ def contact():
 def mypage():
     
     announcements = Announcement.query.all()
+    dates = ImportantDate.query.all()
     
-    return render_template('home/mypage.html', title="My Page", announcements=announcements)
+    return render_template('home/mypage.html', title="My Page", announcements=announcements, dates=dates)
 
 
 #route to user's checksheet
@@ -59,8 +61,9 @@ def mypage():
 def checksheet():
     user_honors_id = current_user.honors_id
     user_checksheet = Checksheet.query.filter_by(honors_id=user_honors_id).first()
+    dates = ImportantDate.query.all()
    
-    return render_template('home/view-checksheet.html', title="My Checksheet", checksheet=user_checksheet)
+    return render_template('home/view-checksheet.html', title="My Checksheet", checksheet=user_checksheet, dates=dates)
 
 
 @home.route('/admin/dashboard')
