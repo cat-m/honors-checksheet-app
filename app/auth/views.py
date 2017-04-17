@@ -4,7 +4,7 @@ import datetime
 from . import auth
 from forms import LoginForm, RegistrationForm, ResetPasswordForm, ChangePasswordForm, ResetPasswordEmailForm
 from .. import db
-from ..models import User
+from ..models import User, ImportantDate
 from ..token import generate_confirmation_token, confirm_token
 from app.email import send_email
 
@@ -88,6 +88,8 @@ def register():
 @auth.route('/', methods=['GET', 'POST'])
 def login():
     formLogin = LoginForm()
+    dates = ImportantDate.query.all()
+    
     if formLogin.validate_on_submit():
     
         user = User.query.filter_by(email=formLogin.email.data).first()
@@ -100,7 +102,7 @@ def login():
         else:
             flash('Invalid email or password.')
     
-    return render_template('home/index.html', formLogin=formLogin, title='Login')
+    return render_template('home/index.html', formLogin=formLogin, title='Login', dates=dates)
     
 #logout
 @auth.route('/logout')

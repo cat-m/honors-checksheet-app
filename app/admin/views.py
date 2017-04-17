@@ -18,6 +18,7 @@ from ..models import User, Checksheet, Announcement, ImportantDate
 @admin.route('/upload', methods=['GET', 'POST'])
 @login_required
 def upload():
+    dates = ImportantDate.query.all()
     if not current_user.is_admin:
         #throw a 403 error. we could do a custom error page later.
         abort(403)
@@ -47,13 +48,14 @@ def upload():
 
         return redirect(url_for('admin.upload'))
         
-    return render_template('admin/upload.html', title="Upload", formUpload=formUpload)
+    return render_template('admin/upload.html', title="Upload", formUpload=formUpload, dates=dates)
     
     
 #search for student
 @admin.route('/search', methods=['GET', 'POST'])
 @login_required
 def search():
+    dates = ImportantDate.query.all()
     if not current_user.is_admin:
         #throw a 403 error. we could do a custom error page later.
         abort(403)
@@ -67,11 +69,12 @@ def search():
         
         #return redirect(url_for('admin.checksheet'))
         
-    return render_template('admin/search.html', title="Search", formSearch=formSearch)
+    return render_template('admin/search.html', title="Search", formSearch=formSearch, dates=dates)
 
 @admin.route('/announcement/add', methods=['GET', 'POST'])
 @login_required
 def add_announcement():
+    dates = ImportantDate.query.all()
     if not current_user.is_admin:
         #throw a 403 error. we could do a custom error page later.
         abort(403)
@@ -87,7 +90,7 @@ def add_announcement():
         flash('Announcement successfully added!', 'success')
         return redirect(url_for('home.admin_dashboard'))
         
-    return render_template('admin/announcement.html', title="Add Announcement", action="Add", add_announcement=add_announcement, form=form)
+    return render_template('admin/announcement.html', title="Add Announcement", action="Add", add_announcement=add_announcement, form=form, dates=dates)
 
 
 #edit an announcement
@@ -98,6 +101,7 @@ def edit_announcement(id):
         abort(403)
         
     add_announcement = False
+    dates = ImportantDate.query.all()
     
     announcement = Announcement.query.get_or_404(id)
     form = AnnouncementForm(obj=announcement)
@@ -111,7 +115,7 @@ def edit_announcement(id):
     form.title.data = announcement.title
     form.description.data = announcement.description
     
-    return render_template('admin/announcement.html', title="Edit Announcement", action="Edit", add_announcement=add_announcement, form=form, announcement=announcement)
+    return render_template('admin/announcement.html', title="Edit Announcement", action="Edit", add_announcement=add_announcement, form=form, announcement=announcement, dates=dates)
         
 #delete an announcement
 @admin.route('/announcement/delete/<int:id>', methods=['GET', 'POST'])
@@ -135,6 +139,7 @@ def add_date():
         #throw a 403 error. we could do a custom error page later.
         abort(403)
     add_date = True
+    dates = ImportantDate.query.all()
         
     form = DateForm()
     if form.validate_on_submit():
@@ -146,7 +151,7 @@ def add_date():
         flash('Date successfully added!', 'success')
         return redirect(url_for('home.admin_dashboard'))
         
-    return render_template('admin/edit-dates.html', title="Add Date", action="Add", add_date=add_date, form=form)    
+    return render_template('admin/edit-dates.html', title="Add Date", action="Add", add_date=add_date, form=form, dates=dates)    
 
 #edit an important date
 @admin.route('/date/edit/<int:id>', methods=['GET', 'POST'])
@@ -156,6 +161,7 @@ def edit_date(id):
         abort(403)
         
     add_date = False
+    dates = ImportantDate.query.all()
     
     date = ImportantDate.query.get_or_404(id)
     form = DateForm(obj=date)
@@ -170,7 +176,7 @@ def edit_date(id):
     form.title.data = date.title
     form.description.data = date.description
     
-    return render_template('admin/edit-dates.html', title="Edit Date", action="Edit", add_date=add_date, form=form, date=date)
+    return render_template('admin/edit-dates.html', title="Edit Date", action="Edit", add_date=add_date, form=form, date=date, dates=dates)
         
 #delete an important date
 @admin.route('/date/delete/<int:id>', methods=['GET', 'POST'])
@@ -194,6 +200,7 @@ def delete_date(id):
 def checksheet():
     student_honors_id = current_user.honors_id
     student_checksheet = Checksheet.query.filter_by(honors_id=student_honors_id).first()
+    dates = ImportantDate.query.all()
    
-    return render_template('home/view-checksheet.html', title="Student's Checksheet", checksheet=student_checksheet)
+    return render_template('home/view-checksheet.html', title="Student's Checksheet", checksheet=student_checksheet, dates=dates)
 
