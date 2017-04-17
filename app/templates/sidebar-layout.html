@@ -13,13 +13,13 @@
     <title>Honors Program - {{ title }}</title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="../static/assets/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ base_url }}/static/assets/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom CSS -->
 
 
     <!-- Custom Fonts -->
-    <link href="../static/assets/dist/fonts/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="{{ base_url }}/static/assets/dist/fonts/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -139,8 +139,12 @@
                                                     </li> 
                                                     <li>
                                                         <a href="{{ url_for('admin.search') }}">Search Student Checksheets</a>
-                                                    </li> <li>
-                                                        <a href="{{ url_for('admin.announcement') }}">Edit Announcements</a>
+                                                    </li> 
+                                                    <li>
+                                                        <a href="{{ url_for('admin.add_announcement') }}">Add Announcement</a>
+                                                    </li> 
+                                                    <li>
+                                                        <a href="{{ url_for('admin.add_date') }}">Add Important Dates</a>
                                                     </li> 
                                                     <li>
                                                         <a href="{{ url_for('admin.announcement') }}">Add Announcement</a>
@@ -150,13 +154,6 @@
                                                         <a href="{{ url_for('home.mypage') }}">MyPage</a>
                                                     </li>
                                                 {% endif%}
-                                            <li>
-                                                <a href="{{ url_for('auth.logout') }}">Logout</a>
-                                            </li>
-                                            {% else %}
-                                            <li>
-                                                <a href="{{ url_for('auth.login') }}">Login</a>
-                                            </li>
                                             {% endif %}
                                         </ul>
                                     </div>
@@ -203,9 +200,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
-    <script src="../static/assets/dist/js/bootstrap.min.js"></script>
+    <script src="{{ base_url }}/static/assets/dist/js/bootstrap.min.js"></script>
 
-    <script src="../static/assets/js/jqBootstrapValidation.js"></script>
+    <script src="{{ base_url }}/static/assets/js/jqBootstrapValidation.js"></script>
 
 
 
