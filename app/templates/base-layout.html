@@ -78,10 +78,7 @@
                     {% if current_user.is_admin %}
                         <li>
                             <a href="{{ url_for('home.admin_dashboard') }}">Admin Dashboard</a>
-                        </li> 
-                        <li>
-                             <a href="{{ url_for('admin.announcement') }}">Add Announcement</a>
-                        </li> 
+                        </li>
                     {% else %}
                         <li>
                             <a href="{{ url_for('home.mypage') }}">MyPage</a>
