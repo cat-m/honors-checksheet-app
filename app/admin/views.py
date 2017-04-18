@@ -45,9 +45,28 @@ def upload():
             flash('Upload Successful!')
             
             # drop old users from database
-            #try:
-                
-            
+            try:
+                students = User.query.filter_by(is_admin=0).all()
+                if students is not None:
+                    for student in students:
+                        print("student=%s" % student.username)
+                        try:
+                            found = Checksheet.query.filter_by(honors_id=student.honors_id).first()
+                            print(found)
+                            if found is None:
+                                try:
+                                    user = User.query.get_or_404(student.id)
+                                    db.session.delete(user)
+                                    db.session.commit()
+                                except:
+                                    db.session.rollback()
+                                    flash('User not deleted','danger')
+                        except:
+                            flash('Error when searching Checksheet table','danger')
+                else:
+                    flash('There are currently no student accounts.','warning')
+            except:
+                flash('Error searching Users table','danger')
         except: 
             flash('The file you uploaded has an error. Please check the format and try again.')
 
