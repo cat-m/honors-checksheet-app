@@ -9,7 +9,7 @@ import csv
 
 
 from . import admin
-from forms import FileUploadForm, StudentSearchForm, AnnouncementForm, DateForm
+from forms import FileUploadForm, StudentSearchIDForm, StudentSearchNameForm, AnnouncementForm, DateForm
 from .. import db
 from ..models import User, Checksheet, Announcement, ImportantDate
 
@@ -39,7 +39,7 @@ def upload():
         try:
             checksheet = pd.read_csv(file)
             checksheet.dropna(axis=0, how='all', inplace=True)
-            checksheet.columns = ['firstName', 'lastName', 'honors_id', 'email', 'admitted', 'dupontCode', 'status', 'comments', 'term', 'major', 'advisor', 'initialEssayDate', 'coCur1', 'coCurDate1', 'coCur2', 'coCurDate2', 'coCur3', 'coCurDate3', 'coCur4', 'coCurDate4', 'coCur5', 'coCurDate5', 'coCur6', 'coCurDate6', 'coCur7', 'coCurDate7', 'coCur8', 'coCurDate8', 'fsemHN', 'fsemHNDate', 'hnCourse1', 'hnCourse1Date', 'hnCourse2', 'hnCourse2Date', 'hnCourse3', 'hnCourse3Date', 'hnCourse4', 'hnCourse4Date', 'hnCourse5', 'hnCourse5Date', 'researchCourse', 'researchCourseDate', 'capstoneCourse', 'capstoneCourseDate', 'hon201', 'hon201Date', 'leadership', 'mentoring', 'portfolio4', 'portfolio1', 'portfolio2', 'portfolio3', 'exit']
+            checksheet.columns = ['lastName', 'firstName', 'honors_id', 'email', 'admitted', 'dupontCode', 'status', 'comments', 'term', 'major', 'advisor', 'initialEssayDate', 'coCur1', 'coCurDate1', 'coCur2', 'coCurDate2', 'coCur3', 'coCurDate3', 'coCur4', 'coCurDate4', 'coCur5', 'coCurDate5', 'coCur6', 'coCurDate6', 'coCur7', 'coCurDate7', 'coCur8', 'coCurDate8', 'fsemHN', 'fsemHNDate', 'hnCourse1', 'hnCourse1Date', 'hnCourse2', 'hnCourse2Date', 'hnCourse3', 'hnCourse3Date', 'hnCourse4', 'hnCourse4Date', 'hnCourse5', 'hnCourse5Date', 'researchCourse', 'researchCourseDate', 'capstoneCourse', 'capstoneCourseDate', 'hon201', 'hon201Date', 'leadership', 'mentoring', 'portfolio4', 'portfolio1', 'portfolio2', 'portfolio3', 'exit']
             
             checksheet.to_sql('checksheets', con=db.engine, if_exists='append', index=False)
             flash('Upload Successful!')
@@ -83,7 +83,8 @@ def search():
     if not current_user.is_admin:
         #throw a 403 error. we could do a custom error page later.
         abort(403)
-    formSearch = StudentSearchForm()
+    formSearch = StudentSearchIDForm()
+    formNameSearch = StudentSearchNameForm()
     if formSearch.validate_on_submit():
         student_honors_id = formSearch.studentID.data
         student_checksheet = Checksheet.query.filter_by(honors_id=student_honors_id).first()
@@ -91,10 +92,18 @@ def search():
  
         return render_template('home/view-checksheet.html', title=title, checksheet=student_checksheet)
         
+    if formNameSearch.validate_on_submit():
+        student_name = formNameSearch.studentName.data
+        print student_name
+        student_results = Checksheet.query.filter(Checksheet.lastName.like("%"+student_name+"%")).all()
+        print student_results
+        return render_template('home/view-search-results.html', title="Search Results", results=student_results)
         #return redirect(url_for('admin.checksheet'))
         
-    return render_template('admin/search.html', title="Search", formSearch=formSearch, dates=dates)
+    return render_template('admin/search.html', title="Search", formSearch=formSearch, formNameSearch=formNameSearch, dates=dates)
 
+
+#add an announcement
 @admin.route('/announcement/add', methods=['GET', 'POST'])
 @login_required
 def add_announcement():
@@ -168,7 +177,7 @@ def add_date():
     form = DateForm()
     if form.validate_on_submit():
         newDate = ImportantDate(title=form.title.data,
-                    info=form.description.data,
+                    info=form.info.data,
                     date_time=form.date.data)
         db.session.add(newDate)
         db.session.commit()
@@ -191,14 +200,15 @@ def edit_date(id):
     form = DateForm(obj=date)
     if form.validate_on_submit():
         date.title = form.title.data
-        date.description = form.description.data
+        date.info = form.info.data
         date.date_time=form.date.data
         db.session.commit()
         flash('You have sucessfully edited the date.', 'success')
     
         
     form.title.data = date.title
-    form.description.data = date.description
+    form.info.data = date.info
+    form.date.data = date.date_time
     
     return render_template('admin/edit-dates.html', title="Edit Date", action="Edit", add_date=add_date, form=form, date=date, dates=dates)
         

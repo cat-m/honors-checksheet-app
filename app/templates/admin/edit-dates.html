@@ -18,11 +18,15 @@
         </div>
         <div class="row">
             <div class="col-lg-12">
-                
-                <p>Add dates of important deadlines or events for students to see</p>
+            
+                {{ utils.flashed_messages() }}
+                {% if add_date %}
+                    <p>Add dates of important deadlines or events for students to see</p>
+                {% else %}
+                    <p>Edit the date of important deadline or event</p>
+                {% endif %}
              
-             
-                 {{ wtf.quick_form(form) }}
+                {{ wtf.quick_form(form) }}
 
               
          <!--        <div class="form-group">
