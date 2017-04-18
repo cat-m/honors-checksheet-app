@@ -10,7 +10,7 @@ from app.email import send_email
 
 #check that token created and email matches an email in the database
 @auth.route('/confirm/<token>')
-@login_required
+#@login_required
 def confirm_email(token):
     try:
         email = confirm_token(token)
@@ -26,7 +26,8 @@ def confirm_email(token):
         db.session.commit()
         flash('You have confirmed your account. Thank You!', 'success')
         
-    return redirect(url_for('home.mypage'))
+    #return redirect(url_for('home.mypage'))
+    return redirect(url_for('auth.login'))
 
 #check that user token created and email matches email in database
 @auth.route('/update-password/<token>', methods=['GET', 'POST'])
@@ -53,10 +54,11 @@ def update_password(token):
     
 #unconfirmed
 @auth.route('/unconfirmed')
-@login_required
+#@login_required
 def unconfirmed():
     if current_user.is_confirmed:
-        return redirect('home.mypage')
+        #return redirect('home.mypage')
+        return redirect('auth.login')
     flash('Please confirm your account!', 'warning')
     return render_template('auth/unconfirmed.html', title="Unconfirmed")
     

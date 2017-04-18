@@ -143,6 +143,7 @@ def edit_announcement(id):
         announcement.description = form.description.data
         db.session.commit()
         flash('You have sucessfully edited the announcement.', 'success')
+        return redirect(url_for('home.admin_dashboard'))
     
         
     form.title.data = announcement.title
@@ -204,6 +205,7 @@ def edit_date(id):
         date.date_time=form.date.data
         db.session.commit()
         flash('You have sucessfully edited the date.', 'success')
+        return redirect(url_for('home.admin_dashboard'))
     
         
     form.title.data = date.title
