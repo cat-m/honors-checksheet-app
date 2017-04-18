@@ -43,6 +43,11 @@ def upload():
             
             checksheet.to_sql('checksheets', con=db.engine, if_exists='append', index=False)
             flash('Upload Successful!')
+            
+            # drop old users from database
+            #try:
+                
+            
         except: 
             flash('The file you uploaded has an error. Please check the format and try again.')
 

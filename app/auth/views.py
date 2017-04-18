@@ -80,6 +80,7 @@ def register():
         send_email(user.email, subject, html)
         
         flash('You have successfully registered! Please check your email to confirm your account.', 'success')
+        return redirect(url_for('auth.login'))
 
     return render_template('auth/register.html', form=form, title='Create New Account')
     
