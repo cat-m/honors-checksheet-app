@@ -21,7 +21,7 @@
                 {% if results %}
                 <ul>
                 {% for result in results %}
-                    <li>{{ result.lastName }}</li>
+                    <li><a href="#">{{ result.lastName }}, {{ result.firstName }}</a></li>
                 {% endfor %}
                 </ul>
                 {% endif %}
