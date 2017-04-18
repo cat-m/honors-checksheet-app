@@ -9,7 +9,7 @@ import csv
 
 
 from . import admin
-from forms import FileUploadForm, StudentSearchForm, AnnouncementForm, DateForm
+from forms import FileUploadForm, StudentSearchIDForm, StudentSearchNameForm, AnnouncementForm, DateForm
 from .. import db
 from ..models import User, Checksheet, Announcement, ImportantDate
 
@@ -57,7 +57,8 @@ def search():
     if not current_user.is_admin:
         #throw a 403 error. we could do a custom error page later.
         abort(403)
-    formSearch = StudentSearchForm()
+    formSearch = StudentSearchIDForm()
+    formNameSearch = StudentSearchNameForm()
     if formSearch.validate_on_submit():
         student_honors_id = formSearch.studentID.data
         student_checksheet = Checksheet.query.filter_by(honors_id=student_honors_id).first()
@@ -65,10 +66,17 @@ def search():
  
         return render_template('home/view-checksheet.html', title=title, checksheet=student_checksheet)
         
+    if formNameSearch.validate_on_submit():
+        student_name = formNameSearch.studentName.data
+        print student_name
+        student_results = Checksheet.query.filter(Checksheet.lastName.like(student_name+"%")).all()
+        print student_results.lastName
+        return render_template('home/view-search-results.html', title="Search Results", results=student_results)
         #return redirect(url_for('admin.checksheet'))
         
-    return render_template('admin/search.html', title="Search", formSearch=formSearch)
+    return render_template('admin/search.html', title="Search", formSearch=formSearch, formNameSearch=formNameSearch)
 
+#add an announcement
 @admin.route('/announcement/add', methods=['GET', 'POST'])
 @login_required
 def add_announcement():

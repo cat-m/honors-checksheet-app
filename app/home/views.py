@@ -9,11 +9,12 @@ from ..models import User, Checksheet, Contact, Announcement, ImportantDate
 from app.decorators import check_confirmed
 from app.email import send_email
 
-@home.route('/', methods=['GET', 'POST'])
-def homepage():
+#@home.route('/', methods=['GET', 'POST'])
+#def homepage():
 
             
-    return render_template('home/index.html', title="Home")
+    
+    #return render_template('home/index.html', title="Home")
     
 #route to contact page with contact form
 @home.route('/contact', methods=['GET', 'POST'])

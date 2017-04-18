@@ -9,10 +9,16 @@ class FileUploadForm(FlaskForm):
     file = FileField('File', validators=[DataRequired()])
     submit = SubmitField('Upload')
     
-#file upload form for adding data to database
-class StudentSearchForm(FlaskForm):
+#search for student by Honors_ID
+class StudentSearchIDForm(FlaskForm):
     
     studentID = TextField('Student Honors ID', validators=[DataRequired()])
+    submit = SubmitField('Search')
+
+#search for stucent by Name
+class StudentSearchNameForm(FlaskForm):
+    
+    studentName= TextField('Student Name', validators=[DataRequired()])
     submit = SubmitField('Search')
 
 #announcement upload form for adding announcement to database    
