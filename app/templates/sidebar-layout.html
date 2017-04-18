@@ -163,14 +163,22 @@
                                 </div>
                                 
                                 <div class="panel-body">
-                                  <h4><strong>March 27, 2017</strong></h4>
-                                  <li>Fall 2017 Advance Registration Begins</li>
-                                  <p></p>
+                                    
+                                    {% for date in dates %}
+                                    <h4><strong>{{date.date_time}}</strong></h4>
+                                    <li><strong>{{date.title}}</strong></li>
+                                    <p></p>
+                                    {% endfor %}
+                                    
+                                    <h4><strong>March 27, 2017</strong></h4>
+                                    <li>Fall 2017 Advance Registration Begins</li>
+                                    <p></p>
                                   
-                                  <h4><strong>April 7, 2017</strong></h4>
-                                  <li>Fall 2017 Advance Registration Ends</li>
-                                  <p></p>
+                                    <h4><strong>April 7, 2017</strong></h4>
+                                    <li>Fall 2017 Advance Registration Ends</li>
+                                    <p></p>
                                 </div>
+                                
                             </div>
                             {% endif %}
                             

@@ -4,7 +4,7 @@ import datetime
 from . import auth
 from forms import LoginForm, RegistrationForm, ResetPasswordForm, ChangePasswordForm, ResetPasswordEmailForm
 from .. import db
-from ..models import User
+from ..models import User, ImportantDate
 from ..token import generate_confirmation_token, confirm_token
 from app.email import send_email
 
@@ -34,7 +34,7 @@ def update_password(token):
     try:
         email = confirm_token(token)
     except:
-        flash('The reset password link is invalid or has expaired.', 'danger')
+        flash('The reset password link is invalid or has expired.', 'danger')
         
     user = User.query.filter_by(email=email).first_or_404()
     flash('You have confirmed your account. You may now reset your password', 'success')
@@ -88,6 +88,8 @@ def register():
 @auth.route('/', methods=['GET', 'POST'])
 def login():
     formLogin = LoginForm()
+    dates = ImportantDate.query.all()
+    
     if formLogin.validate_on_submit():
     
         user = User.query.filter_by(email=formLogin.email.data).first()
@@ -100,7 +102,7 @@ def login():
         else:
             flash('Invalid email or password.')
     
-    return render_template('home/index.html', formLogin=formLogin, title='Login')
+    return render_template('home/index.html', formLogin=formLogin, title='Login', dates=dates)
     
 #logout
 @auth.route('/logout')
@@ -143,6 +145,10 @@ def changepassword():
             db.session.add(user)
             db.session.commit()
             flash('Password reset successful.', 'success')
+            if user.is_admin:
+                return redirect(url_for('home.admin_dashboard'))
+            else:
+                return redirect(url_for('home.mypage'))
         else: 
             flash('Old password field incorrect.', 'danger')
     
