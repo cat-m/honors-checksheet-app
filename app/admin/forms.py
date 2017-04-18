@@ -32,7 +32,7 @@ class AnnouncementForm(FlaskForm):
 class DateForm(FlaskForm):
     
     title = TextField('Title', validators=[DataRequired()])
-    description = TextField('Description', validators=[DataRequired()])
+    info = TextField('Info', validators=[DataRequired()])
     date = DateField('Date', validators=[DataRequired()])
     submit = SubmitField('Submit')
 

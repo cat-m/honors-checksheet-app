@@ -153,7 +153,7 @@ def add_date():
     form = DateForm()
     if form.validate_on_submit():
         newDate = ImportantDate(title=form.title.data,
-                    info=form.description.data,
+                    info=form.info.data,
                     date_time=form.date.data)
         db.session.add(newDate)
         db.session.commit()
@@ -176,14 +176,15 @@ def edit_date(id):
     form = DateForm(obj=date)
     if form.validate_on_submit():
         date.title = form.title.data
-        date.description = form.description.data
+        date.info = form.info.data
         date.date_time=form.date.data
         db.session.commit()
         flash('You have sucessfully edited the date.', 'success')
     
         
     form.title.data = date.title
-    form.description.data = date.description
+    form.info.data = date.info
+    form.date.data = date.date_time
     
     return render_template('admin/edit-dates.html', title="Edit Date", action="Edit", add_date=add_date, form=form, date=date, dates=dates)
         
