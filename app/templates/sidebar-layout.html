@@ -16,7 +16,12 @@
     <link href="{{ base_url }}/static/assets/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom CSS -->
-
+    <style>
+      .jumbotron {
+        background-color: #00305e;
+        color: #ffffff;
+      }
+    </style>
 
     <!-- Custom Fonts -->
     <link href="{{ base_url }}/static/assets/dist/fonts/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -27,12 +32,6 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-    <style>
-      .jumbotron {
-        background-color: #00305e;
-        color: #ffffff;
-      }
-    </style>
 </head>
 
 <body>
@@ -138,9 +137,9 @@
                                 </div>
                             </div>
                             {% if current_user.is_authenticated %}
-                            <div class="panel panel-default" background-color=#d12627>
+                            <div class="panel panel-default">
                                 <div class="panel-heading">
-                                  <h3>Upcoming Deadlines</h3>
+                                  <h3>Important Dates</h3>
                                 </div>
                                 
                                 <div class="panel-body">
@@ -151,7 +150,7 @@
                                     <p></p>
                                     {% endfor %}
                                 {% else %}
-                                    <p>There are no new Upcoming Deadlines</p>
+                                    <p>There are no dates to display.</p>
                                 {% endif %}
                                 </div>
 

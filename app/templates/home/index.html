@@ -4,7 +4,7 @@
 {% block content %}
     <img class="img-responsive" src="../static/img/dupont.jpg">
 
-    <!-- Main jumbotron for a primary marketing message or call to action -->
+    <!-- Main jumbotron showing welcome message and login form -->
     <div class="container jumbotron">
       <div class="row">
         <div class="col-lg-6">
@@ -29,7 +29,6 @@
 
     
     <div class="container">
-      <!-- Example row of columns -->
       <div class="row">
         <div class="col-md-8">
           <h2>Honors Program Information</h2>
@@ -59,19 +58,25 @@
         </div>
         <div class="col-md-4">
           
-          <div class="panel panel-default" background-color=#d12627>
+          <div class="panel panel-default">
             <div class="panel-heading">
               <h2>Important Dates</h2>
             </div>
             
             <div class="panel-body">
-            
-              {% for date in dates %}
-              <h4><strong>{{date.date_time}}</strong></h4>
-              <li><strong>{{date.title}}</strong></li>
-              <p></p>
-              {% endfor %}
-              
+              {% if dates %}
+                {% for date in dates %}
+                
+                <h4><strong>{{date.date_time.strftime('%b %d, %Y')}}</strong></h4>
+                
+                  <strong>{{date.title}}</strong>
+                  <li>{{date.info}}</li>
+                
+                <p></p>
+                {% endfor %}
+              {% else %}
+                <p>There are no dates to display.</p>
+              {% endif %}
             </div>
             
           </div>
