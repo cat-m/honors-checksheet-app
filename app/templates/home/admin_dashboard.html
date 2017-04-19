@@ -4,7 +4,6 @@
 {% block content %}
 
         <!-- Page Heading/Breadcrumbs -->
-
         <div class="row">
             <div class="col-lg-12">
                 <h1 class="page-header">{{ title }}
@@ -33,10 +32,10 @@
         </div>
         <div class="row">
             <div class="col-lg-12">
-                <div class="col-lg-6">
                 <br />
                 {{ utils.flashed_messages() }}
                 <br /> 
+                <div class="col-lg-6">
                     <h3>Announcements</h3>
                     {% if announcements %}
                     {% for announcement in announcements %}
@@ -54,7 +53,7 @@
                         </div>
                         <div class="panel-body">
                             <p>{{ announcement.description }}</p>
-                            <p>Created: {{ announcement.created }}</p>
+                            <p>Created: {{ announcement.created.strftime('%b %d, %Y')}}</p>
                         </div>
                     </div>
                     {% endfor %}
@@ -62,8 +61,6 @@
                 </div>
 
                 <div class="col-lg-6">
-                <br />
-                <br /> 
                     <h3>Deadlines</h3>
                     {% if dates %}
                     {% for date in dates %}
@@ -80,7 +77,7 @@
                             </div>
                         </div>
                         <div class="panel-body">
-                            <p>{{ date.date_time }}</p>
+                            <p>{{ date.date_time.strftime('%b %d, %Y') }}</p>
                             <p>{{ date.info }}</p>
                         </div>
                     </div>

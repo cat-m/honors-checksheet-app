@@ -145,7 +145,7 @@
                                 <div class="panel-body">
                                 {% if dates %}
                                     {% for date in dates %}
-                                    <h4><strong>{{date.date_time}}</strong></h4>
+                                    <h4><strong>{{date.date_time.strftime('%b %d, %Y')}}</strong></h4>
                                     <li><strong>{{date.title}}</strong></li>
                                     <p></p>
                                     {% endfor %}
