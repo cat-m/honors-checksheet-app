@@ -33,7 +33,7 @@
                     </div>
                     <div class="panel-body">
                         <p>{{ announcement.description }}</p>
-                        <p>Created: {{ announcement.created }}</p>
+                        <p>Created: {{ announcement.created.strftime('%b %d, %Y') }}</p>
                     </div>
                 </div>
                 {% endfor %}
