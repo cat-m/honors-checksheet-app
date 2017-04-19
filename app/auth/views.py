@@ -90,7 +90,7 @@ def register():
 @auth.route('/', methods=['GET', 'POST'])
 def login():
     formLogin = LoginForm()
-    dates = ImportantDate.query.all()
+    dates = ImportantDate.query.order_by(ImportantDate.date_time)
     
     if formLogin.validate_on_submit():
     
