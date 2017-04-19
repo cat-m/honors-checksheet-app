@@ -37,13 +37,13 @@ def upload():
             flash('There was an error dumping the Checksheet database', 'danger')
             
         try:
-            checksheet = pd.read_csv(file)
+            parse_dates = ['Initial essay', 'Date 1', 'Date 2', 'Date 3', 'Date 4', 'Date 5', 'Date 6', 'Date 7', 'Date 8']
+            checksheet = pd.read_csv(file, parse_dates=parse_dates)
             checksheet.dropna(axis=0, how='all', inplace=True)
             checksheet.columns = ['lastName', 'firstName', 'honors_id', 'email', 'admitted', 'dupontCode', 'status', 'comments', 'term', 'major', 'advisor', 'initialEssayDate', 'coCur1', 'coCurDate1', 'coCur2', 'coCurDate2', 'coCur3', 'coCurDate3', 'coCur4', 'coCurDate4', 'coCur5', 'coCurDate5', 'coCur6', 'coCurDate6', 'coCur7', 'coCurDate7', 'coCur8', 'coCurDate8', 'fsemHN', 'fsemHNDate', 'hnCourse1', 'hnCourse1Date', 'hnCourse2', 'hnCourse2Date', 'hnCourse3', 'hnCourse3Date', 'hnCourse4', 'hnCourse4Date', 'hnCourse5', 'hnCourse5Date', 'researchCourse', 'researchCourseDate', 'capstoneCourse', 'capstoneCourseDate', 'hon201', 'hon201Date', 'leadership', 'mentoring', 'portfolio4', 'portfolio1', 'portfolio2', 'portfolio3', 'exit']
-            
             checksheet.to_sql('checksheets', con=db.engine, if_exists='append', index=False)
             flash('Upload Successful!')
-            
+            print checksheet['coCurDate1']
             # drop old users from database
             try:
                 students = User.query.filter_by(is_admin=0).all()

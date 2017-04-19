@@ -163,13 +163,17 @@
                                 </div>
                                 
                                 <div class="panel-body">
+                                {% if dates %}
                                     {% for date in dates %}
                                     <h4><strong>{{date.date_time}}</strong></h4>
                                     <li><strong>{{date.title}}</strong></li>
                                     <p></p>
                                     {% endfor %}
+                                {% else %}
+                                    <p>There are no new Upcoming Deadlines</p>
+                                {% endif %}
                                 </div>
-                                
+
                             </div>
                             {% endif %}
                             
