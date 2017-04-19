@@ -3,32 +3,33 @@
 
 <p>This a Python/Flask web application.</p>
 
-<h2>Necessary tools:</h2>
+<h2>Necessary depenencies:</h2>
 
 <ul>
     <li>Flask</li>
-    <li>SQLAlchemy</li>
-    <li>flask-login</li>
-    <li>flask-migrate</li>
-    <li>A MySQL database</li>
+    <li>Flask-SQLAlchemy</li>
+    <li>Flask-MySQL</li>
+    <li>Flask-Login</li>
+    <li>Flask-Bootstrap</li>
     <li>Flask-Mail</li>
     <li>datetime</li>
-    <li>itsdangerous</li>
-    <li>flask-bootstrap</li>
+    <li>Pandas</p>
 </ul>
 
-<h2>Database setup</h2>
+<h2>MySQL Database setup</h2>
 
 <p>For the database, you will need to have MySQL installed and running. You need to log in as the root user, then create a new user and database for the project. 
 
 You will then want to grant all privileges on the database to the database user you created. </p>
-<p>You will also need to create an instance directory in the honors directory, and create config.py inside of it. 
+<p>You will also need to create an instance directory in the main directory, and create config.py inside of it. 
 In this file, you will add the secret key and database URI for your database.</p>
-Example instance/config.py:
-<code>
-SECRET_KEY = 'secret_key'
-SQLALCHEMY_DATABASE_URI = 'mysql://user:password@localhost/database'
-</code>
+Example instance/config.py:<br />
+<pre>
+    <code>
+    SECRET_KEY = 'secret_key'
+    SQLALCHEMY_DATABASE_URI = 'mysql://user:password@localhost/database'
+    </code>
+</pre>
 
 <p>Finally, you will need to run flask db init to initialize the database.</p>
 <code>>> flask db init</code>
