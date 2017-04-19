@@ -64,6 +64,7 @@
             </div>
             
             <div class="panel-body">
+<<<<<<< HEAD
               {% if dates %}
                 {% for date in dates %}
                 
@@ -77,6 +78,15 @@
               {% else %}
                 <p>There are no dates to display.</p>
               {% endif %}
+=======
+            
+              {% for date in dates %}
+              <h4><strong>{{date.date_time.strftime('%b %d, %Y') }}</strong></h4>
+              <li><strong>{{date.title}}</strong></li>
+              <p></p>
+              {% endfor %}
+              
+>>>>>>> e9da2ba698db7aa2646a98d3190be25d1bc5e2a9
             </div>
             
           </div>
