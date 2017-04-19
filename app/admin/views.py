@@ -88,7 +88,7 @@ def search():
     if formSearch.validate_on_submit():
         student_honors_id = formSearch.studentID.data
         student_checksheet = Checksheet.query.filter_by(honors_id=student_honors_id).first()
-        title = "Student %s's Checksheet" % student_honors_id
+        title = "%s's Checksheet" % student_checksheet.firstName #student_honors_id
  
         return render_template('home/view-checksheet.html', title=title, checksheet=student_checksheet)
         
@@ -108,7 +108,7 @@ def view_student_checksheet(honorsid):
         abort(403)
     
     student_checksheet = Checksheet.query.filter_by(honors_id=honorsid).first_or_404()
-    title = "Student %s's Checksheet" % honorsid
+    title = "%s's Checksheet" % student_checksheet.firstName #honorsid
     
     return render_template('home/view-checksheet.html', checksheet=student_checksheet, title=title)
     
