@@ -1,3 +1,5 @@
+{% import "bootstrap/utils.html" as utils %}
+{% import "bootstrap/wtf.html" as wtf %}
 {% extends "sidebar-layout.html" %}
 {% block content %}
 
@@ -17,6 +19,9 @@
         <div class="row">
             <div class="col-lg-12">
                 <h2>Hello, {{ current_user.username }}</h2>
+                <br />
+                {{ utils.flashed_messages() }}
+                <br />
                 <p><a class="btn btn-primary btn-lg" href="{{ url_for('home.checksheet') }}">View Checksheet</a></p>
                 <div class="page-header"><h2>Announcements</h2></div>
                 

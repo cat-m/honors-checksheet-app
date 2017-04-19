@@ -33,9 +33,10 @@
         </div>
         <div class="row">
             <div class="col-lg-12">
-                {{ utils.flashed_messages() }}
                 <div class="col-lg-6">
-
+                <br />
+                {{ utils.flashed_messages() }}
+                <br /> 
                     <h3>Announcements</h3>
                     {% if announcements %}
                     {% for announcement in announcements %}
@@ -61,7 +62,8 @@
                 </div>
 
                 <div class="col-lg-6">
-
+                <br />
+                <br /> 
                     <h3>Deadlines</h3>
                     {% if dates %}
                     {% for date in dates %}

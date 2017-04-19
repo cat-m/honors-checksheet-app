@@ -19,11 +19,11 @@
                 <div class="page-header"><h2>{{ title }}</h2></div>
                 
                 {% if results %}
-                <ul>
+                <ol>
                 {% for result in results %}
-                    <li><a href="#">{{ result.lastName }}, {{ result.firstName }}</a></li>
+                    <li><a href="{{ url_for('admin.view_student_checksheet', honorsid=result.honors_id) }}">{{ result.lastName }}, {{ result.firstName }}</a></li>
                 {% endfor %}
-                </ul>
+                </ol>
                 {% endif %}
             </div>
         </div>

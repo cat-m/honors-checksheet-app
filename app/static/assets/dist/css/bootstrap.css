@@ -2069,7 +2069,7 @@ pre code
 }
 .container .flashed-messages
 {
-    max-width: 500px;
+    max-width: 100%;
 }
 @media (min-width: 768px)
 {

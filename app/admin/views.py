@@ -94,15 +94,24 @@ def search():
         
     if formNameSearch.validate_on_submit():
         student_name = formNameSearch.studentName.data
-        print student_name
         student_results = Checksheet.query.filter(Checksheet.lastName.like("%"+student_name+"%")).all()
-        print student_results
+
         return render_template('home/view-search-results.html', title="Search Results", results=student_results)
-        #return redirect(url_for('admin.checksheet'))
-        
+
     return render_template('admin/search.html', title="Search", formSearch=formSearch, formNameSearch=formNameSearch, dates=dates)
 
-
+#student checksheet after search
+@admin.route('/checksheet-result/<int:honorsid>', methods=['GET', 'POST'])
+@login_required
+def view_student_checksheet(honorsid):
+    if not current_user.is_admin:
+        abort(403)
+    
+    student_checksheet = Checksheet.query.filter_by(honors_id=honorsid).first_or_404()
+    title = "Student %s's Checksheet" % honorsid
+    
+    return render_template('home/view-checksheet.html', checksheet=student_checksheet, title=title)
+    
 #add an announcement
 @admin.route('/announcement/add', methods=['GET', 'POST'])
 @login_required
@@ -170,7 +179,7 @@ def delete_announcement(id):
 @login_required
 def add_date():
     if not current_user.is_admin:
-        #throw a 403 error. we could do a custom error page later.
+        #throw a 403 error if the user is not an admin user
         abort(403)
     add_date = True
     dates = ImportantDate.query.all()
@@ -192,6 +201,7 @@ def add_date():
 @login_required
 def edit_date(id):
     if not current_user.is_admin:
+        #throw a 403 error if the user is not an admin user
         abort(403)
         
     add_date = False
@@ -219,6 +229,7 @@ def edit_date(id):
 @login_required
 def delete_date(id):
     if not current_user.is_admin:
+        #throw a 403 error if the user is not an admin user
         abort(403)
     
     date = ImportantDate.query.get_or_404(id)
@@ -227,16 +238,3 @@ def delete_date(id):
     flash('You have successfully deleted the date.', 'success')
     
     return redirect(url_for('home.admin_dashboard'))
-
-
-#route to student's checksheet
-@admin.route('/checksheet', methods=['GET','POST'])
-@login_required
-#@check_confirmed
-def checksheet():
-    student_honors_id = current_user.honors_id
-    student_checksheet = Checksheet.query.filter_by(honors_id=student_honors_id).first()
-    dates = ImportantDate.query.all()
-   
-    return render_template('home/view-checksheet.html', title="Student's Checksheet", checksheet=student_checksheet, dates=dates)
-

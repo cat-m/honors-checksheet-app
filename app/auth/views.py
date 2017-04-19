@@ -10,7 +10,6 @@ from app.email import send_email
 
 #check that token created and email matches an email in the database
 @auth.route('/confirm/<token>')
-#@login_required
 def confirm_email(token):
     try:
         email = confirm_token(token)
@@ -26,10 +25,10 @@ def confirm_email(token):
         db.session.commit()
         flash('You have confirmed your account. Thank You!', 'success')
         
-    #return redirect(url_for('home.mypage'))
     return redirect(url_for('auth.login'))
 
-#check that user token created and email matches email in database
+
+#check that user token created and email matches email in database. if yes, change password
 @auth.route('/update-password/<token>', methods=['GET', 'POST'])
 def update_password(token):
     try:
@@ -52,15 +51,15 @@ def update_password(token):
         
     return render_template('auth/reset-password.html', title="Reset Password", form=form)
     
-#unconfirmed
+#route for logged in but unconfirmed users
 @auth.route('/unconfirmed')
-#@login_required
+@login_required
 def unconfirmed():
     if current_user.is_confirmed:
-        #return redirect('home.mypage')
         return redirect('auth.login')
     flash('Please confirm your account!', 'warning')
     return render_template('auth/unconfirmed.html', title="Unconfirmed")
+    
     
 #register
 @auth.route('/register', methods=['GET', 'POST'])
@@ -148,6 +147,7 @@ def changepassword():
             db.session.add(user)
             db.session.commit()
             flash('Password reset successful.', 'success')
+
             if user.is_admin:
                 return redirect(url_for('home.admin_dashboard'))
             else:
