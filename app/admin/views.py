@@ -18,7 +18,7 @@ from ..models import User, Checksheet, Announcement, ImportantDate
 @admin.route('/upload', methods=['GET', 'POST'])
 @login_required
 def upload():
-    dates = ImportantDate.query.all()
+    dates = ImportantDate.query.order_by(ImportantDate.date_time)
     if not current_user.is_admin:
         #throw a 403 error. we could do a custom error page later.
         abort(403)
@@ -79,7 +79,7 @@ def upload():
 @admin.route('/search', methods=['GET', 'POST'])
 @login_required
 def search():
-    dates = ImportantDate.query.all()
+    dates = ImportantDate.query.order_by(ImportantDate.date_time)
     if not current_user.is_admin:
         #throw a 403 error. we could do a custom error page later.
         abort(403)
@@ -116,7 +116,7 @@ def view_student_checksheet(honorsid):
 @admin.route('/announcement/add', methods=['GET', 'POST'])
 @login_required
 def add_announcement():
-    dates = ImportantDate.query.all()
+    dates = ImportantDate.query.order_by(ImportantDate.date_time)
     if not current_user.is_admin:
         #throw a 403 error. we could do a custom error page later.
         abort(403)
@@ -143,7 +143,7 @@ def edit_announcement(id):
         abort(403)
         
     add_announcement = False
-    dates = ImportantDate.query.all()
+    dates = ImportantDate.query.order_by(ImportantDate.date_time)
     
     announcement = Announcement.query.get_or_404(id)
     form = AnnouncementForm(obj=announcement)
@@ -181,7 +181,7 @@ def add_date():
         #throw a 403 error if the user is not an admin user
         abort(403)
     add_date = True
-    dates = ImportantDate.query.all()
+    dates = ImportantDate.query.order_by(ImportantDate.date_time)
         
     form = DateForm()
     if form.validate_on_submit():
@@ -204,7 +204,7 @@ def edit_date(id):
         abort(403)
         
     add_date = False
-    dates = ImportantDate.query.all()
+    dates = ImportantDate.query.order_by(ImportantDate.date_time)
     
     date = ImportantDate.query.get_or_404(id)
     form = DateForm(obj=date)

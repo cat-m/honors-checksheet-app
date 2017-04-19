@@ -41,8 +41,8 @@ def contact():
 @check_confirmed
 def mypage():
     
-    announcements = Announcement.query.all()
-    dates = ImportantDate.query.all()
+    announcements = Announcement.query.order_by(Announcement.created.desc())
+    dates = ImportantDate.query.order_by(ImportantDate.date_time)
     
     return render_template('home/mypage.html', title="My Page", announcements=announcements, dates=dates)
 
@@ -54,7 +54,7 @@ def mypage():
 def checksheet():
     user_honors_id = current_user.honors_id
     user_checksheet = Checksheet.query.filter_by(honors_id=user_honors_id).first()
-    dates = ImportantDate.query.all()
+    dates = ImportantDate.query.order_by(ImportantDate.date_time)
    
     return render_template('home/view-checksheet.html', title="My Checksheet", checksheet=user_checksheet, dates=dates)
 
