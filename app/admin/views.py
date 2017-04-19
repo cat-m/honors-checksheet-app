@@ -153,7 +153,6 @@ def edit_announcement(id):
         db.session.commit()
         flash('You have sucessfully edited the announcement.', 'success')
         return redirect(url_for('home.admin_dashboard'))
-    
         
     form.title.data = announcement.title
     form.description.data = announcement.description
