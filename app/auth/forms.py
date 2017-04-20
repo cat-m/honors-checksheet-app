@@ -17,22 +17,25 @@ class RegistrationForm(FlaskForm):
     confirm_password = PasswordField('Confirm Password')
     submit = SubmitField('Register')
     
-    #check to see if the honors_id is already in the database. if no, error
+    #check to see if the honors_id is in the checksheets table. if no, error.
+    #check to see if the honors_id is already database. 
     def validate_honors_id(self, field):
         honors = Checksheet.query.filter_by(honors_id=field.data).first()
         if honors is None:
             raise ValidationError('That Honors ID is not in the database. Please check your Honors ID and try again.')
+        if User.query.filter_by(honors_id=field.data).first():
+            raise ValidationError('An account has already been made for the student with this Honors ID number.')
 
-    #check to see if the email address is already in the database. if yes, error
+    #check to see if the email address is already listed in the database with another user. if yes, error.
+    #check to see if email address is listed with a student row in the checksheets table. if no, error.
     def validate_email(self, field):
         if User.query.filter_by(email=field.data).first():
             raise ValidationError('Email account is already in use.')
-    
-    #check to see if the email address is already in the checksheet database. if no, error
-    def validate_checksheet_email(self, field):
-        email = Checksheet.query.filter_by(email=field.data).first()
-        if email is None: 
+        result = Checksheet.query.filter_by(email=field.data).first()
+        if result is None: 
             raise ValidationError('That Email address is not in the Honors database. Please check your Email address and try again.')
+         
+    
             
 #login form on login page         
 class LoginForm(FlaskForm):
