@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
-from wtforms import SubmitField, ValidationError, TextField, FileField, DateField
+from wtforms import SubmitField, ValidationError, TextField, FileField
 from wtforms.validators import DataRequired
-
+from wtforms.fields.html5 import DateField
 
 #file upload form for adding data to database
 class FileUploadForm(FlaskForm):
