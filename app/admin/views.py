@@ -184,17 +184,25 @@ def add_date():
     dates = ImportantDate.query.order_by(ImportantDate.date_time)
         
     form = DateForm()
-    if form.validate_on_submit():
-        newDate = ImportantDate(title=form.title.data,
-                    info=form.info.data,
-                    date_time=form.date.data)
+#    if form.validate_on_submit():
+#        newDate = ImportantDate(title=form.title.data,
+#                    info=form.info.data,
+#                    date_time=form.date.data)
+#        db.session.add(newDate)
+#        db.session.commit()
+#        flash('Date successfully added!', 'success')
+#        return redirect(url_for('home.admin_dashboard'))
+        
+    
+    if request.method=="POST":
+        form=request.form
+        newDate = ImportantDate(title=form['title'],info=form['info'],date_time=form['date'])
         db.session.add(newDate)
         db.session.commit()
         flash('Date successfully added!', 'success')
         return redirect(url_for('home.admin_dashboard'))
         
-    #form.date.data="YYYY-MM-DD"
-        
+
     return render_template('admin/edit-dates.html', title="Add Date", action="Add", add_date=add_date, form=form, dates=dates)    
 
 #edit an important date
