@@ -15,7 +15,7 @@ class StudentSearchIDForm(FlaskForm):
     studentID = TextField('Student Honors ID', validators=[DataRequired()])
     submit = SubmitField('Search')
 
-#search for stucent by Name
+#search for student by Name
 class StudentSearchNameForm(FlaskForm):
     
     studentName= TextField('Student Name', validators=[DataRequired()])

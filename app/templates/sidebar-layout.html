@@ -149,7 +149,9 @@
                                 {% if dates %}
                                     {% for date in dates %}
                                     <h4><strong>{{date.date_time.strftime('%b %d, %Y')}}</strong></h4>
-                                    <li><strong>{{date.title}}</strong></li>
+                                    <p><strong>{{date.title}}</strong></p>
+                                    <li>{{date.info}}</li>
+                                    <p></p>
                                     <p></p>
                                     {% endfor %}
                                 {% else %}

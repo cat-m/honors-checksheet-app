@@ -44,6 +44,7 @@ def upload():
             checksheet.to_sql('checksheets', con=db.engine, if_exists='append', index=False)
             flash('Upload Successful!')
             print checksheet['coCurDate1']
+            
             # drop old users from database
             try:
                 students = User.query.filter_by(is_admin=0).all()
@@ -100,7 +101,7 @@ def search():
 
     return render_template('admin/search.html', title="Search", formSearch=formSearch, formNameSearch=formNameSearch, dates=dates)
 
-#student checksheet after search
+#display student checksheet after search
 @admin.route('/checksheet-result/<int:honorsid>', methods=['GET', 'POST'])
 @login_required
 def view_student_checksheet(honorsid):
@@ -173,7 +174,7 @@ def delete_announcement(id):
     
     return redirect(url_for('home.admin_dashboard'))
 
-
+#add an important date
 @admin.route('/date/add', methods=['GET', 'POST'])
 @login_required
 def add_date():
@@ -193,7 +194,6 @@ def add_date():
         flash('Date successfully added!', 'success')
         return redirect(url_for('home.admin_dashboard'))
         
-    
 #    if request.method=="POST":
 #        form=request.form
 #        newDate = ImportantDate(title=form['title'],info=form['info'],date_time=form['date'])
@@ -202,7 +202,6 @@ def add_date():
 #        flash('Date successfully added!', 'success')
 #        return redirect(url_for('home.admin_dashboard'))
         
-
     return render_template('admin/edit-dates.html', title="Add Date", action="Add", add_date=add_date, form=form, dates=dates)    
 
 #edit an important date
@@ -225,7 +224,6 @@ def edit_date(id):
         db.session.commit()
         flash('You have sucessfully edited the date.', 'success')
         return redirect(url_for('home.admin_dashboard'))
-    
         
     form.title.data = date.title
     form.info.data = date.info
