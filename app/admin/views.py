@@ -193,6 +193,8 @@ def add_date():
         flash('Date successfully added!', 'success')
         return redirect(url_for('home.admin_dashboard'))
         
+    #form.date.data="YYYY-MM-DD"
+        
     return render_template('admin/edit-dates.html', title="Add Date", action="Add", add_date=add_date, form=form, dates=dates)    
 
 #edit an important date
