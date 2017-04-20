@@ -35,7 +35,7 @@ def contact():
     
     return render_template('home/contact.html', title="Contact Us", form=form)
     
-#route to user's dashboard
+#route to student user's dashboard
 @home.route('/mypage')
 @login_required
 @check_confirmed
@@ -59,6 +59,7 @@ def checksheet():
     return render_template('home/view-checksheet.html', title="My Checksheet", checksheet=user_checksheet, dates=dates)
 
 
+#route to admin user's dashboard
 @home.route('/admin/dashboard')
 @login_required
 @check_confirmed

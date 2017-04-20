@@ -11,14 +11,12 @@ class RegistrationForm(FlaskForm):
     honors_id = StringField('Honors ID', validators=[DataRequired()])
     email = StringField('Email', validators=[DataRequired(), Email()])
     username = StringField('Username', validators=[DataRequired()])
-    password = PasswordField('Password', validators=[DataRequired(), 
-                                            EqualTo('confirm_password')
-                                            ])
+    password = PasswordField('Password', validators=[DataRequired(), EqualTo('confirm_password')])
     confirm_password = PasswordField('Confirm Password')
     submit = SubmitField('Register')
     
     #check to see if the honors_id is in the checksheets table. if no, error.
-    #check to see if the honors_id is already database. 
+    #check to see if the honors_id is already in use with another account in the database. if yes, error.
     def validate_honors_id(self, field):
         honors = Checksheet.query.filter_by(honors_id=field.data).first()
         if honors is None:
@@ -35,22 +33,22 @@ class RegistrationForm(FlaskForm):
         if result is None: 
             raise ValidationError('That Email address is not in the Honors database. Please check your Email address and try again.')
          
-    
             
-#login form on login page         
+# Login form on index page (login page)        
 class LoginForm(FlaskForm):
     
     email = StringField('Email', validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired()])
     submit = SubmitField('Login')
 
-# Form logged in User to change password
+# Form for logged in User to change password
 class ChangePasswordForm(FlaskForm):
     old_password = PasswordField('Old Password', validators=[DataRequired()])
     new_password = PasswordField('New Password', validators=[DataRequired()])
     new_password1 = PasswordField('Confirm New Password', validators=[DataRequired(), EqualTo('new_password')])
     submit = SubmitField('Change Password')
-    
+   
+# Form for user to request a reset of a forgotten password 
 class ResetPasswordEmailForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Email()])
     submit = SubmitField('Reset Password')
