@@ -89,9 +89,11 @@ def search():
     if formSearch.validate_on_submit():
         student_honors_id = formSearch.studentID.data
         student_checksheet = Checksheet.query.filter_by(honors_id=student_honors_id).first()
-        title = "%s's Checksheet" % student_checksheet.firstName #student_honors_id
- 
-        return render_template('home/view-checksheet.html', title=title, checksheet=student_checksheet)
+        if student_checksheet is not None:
+            title = "%s's Checksheet" % student_checksheet.firstName #student_honors_id
+            return render_template('home/view-checksheet.html', title=title, checksheet=student_checksheet)
+        else: 
+            flash('Student not found.')
         
     if formNameSearch.validate_on_submit():
         student_name = formNameSearch.studentName.data
@@ -185,7 +187,7 @@ def add_date():
     dates = ImportantDate.query.order_by(ImportantDate.date_time)
         
     form = DateForm()
-    if form.validate_on_submit():
+    if request.method == 'POST':
         newDate = ImportantDate(title=form.title.data,
                     info=form.info.data,
                     date_time=form.date.data)
