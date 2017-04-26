@@ -1,6 +1,7 @@
 from flask_mail import Message
 from flask import current_app
 from app import mail
+# from this tutorial https://realpython.com/blog/python/handling-email-confirmation-in-flask/
 
 def send_email(to, subject, template):
     msg = Message(
