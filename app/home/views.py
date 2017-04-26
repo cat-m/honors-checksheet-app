@@ -25,9 +25,16 @@ def contact():
         db.session.add(contact)
         db.session.commit()
         
+        #send confirmation email to user
         html = render_template('home/confirm_contact.html', name=contact.name, email=contact.email, phone=contact.phone, message=contact.message)
         subject = "UMW Honors - Thank you for contacting us!"
         send_email(contact.email, subject, html)
+        
+        #send email to admin
+        admin_email = 'umwhonorsperson@gmail.com'
+        html_admin = render_template('home/admin_contact.html', name=contact.name, email=contact.email, phone=contact.phone, message=contact.message)
+        subject2 = "UMW Honors - You have a message from the UMW Honors Portal!"
+        send_email(admin_email, subject2, html_admin)
         
         #change to redirect to success page
         flash('Contact form successfully submitted!', 'success')
