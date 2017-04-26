@@ -15,7 +15,6 @@ class RegistrationForm(FlaskForm):
     confirm_password = PasswordField('Confirm Password')
     submit = SubmitField('Register')
     
-    #check to see if the honors_id is in the checksheets table. if no, error.
     #check to see if the honors_id is already in use with another account in the database. if yes, error.
     def validate_honors_id(self, field):
         honors = Checksheet.query.filter_by(honors_id=field.data).first()
@@ -29,10 +28,16 @@ class RegistrationForm(FlaskForm):
     def validate_email(self, field):
         if User.query.filter_by(email=field.data).first():
             raise ValidationError('Email account is already in use.')
+            
         result = Checksheet.query.filter_by(email=field.data).first()
         if result is None: 
             raise ValidationError('That Email address is not in the Honors database. Please check your Email address and try again.')
-         
+        print result.honors_id
+        student_honors = Checksheet.query.filter_by(honors_id=result.honors_id).first()
+        print student_honors
+        if student_honors is None:
+            raise ValidationError('That Email address is not associated with the Honors ID you entered. Please try again with your UMW email address.')
+        
             
 # Login form on index page (login page)        
 class LoginForm(FlaskForm):
