@@ -10,6 +10,7 @@
     <li>Flask-SQLAlchemy</li>
     <li>Flask-MySQL</li>
     <li>Flask-Login</li>
+    <li>Flask-MySQL
     <li>Flask-Bootstrap</li>
     <li>Flask-Mail</li>
     <li>datetime</li>
