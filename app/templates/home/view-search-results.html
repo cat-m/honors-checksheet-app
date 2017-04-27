@@ -24,6 +24,8 @@
                     <li><a href="{{ url_for('admin.view_student_checksheet', honorsid=result.honors_id) }}">{{ result.lastName }}, {{ result.firstName }}</a></li>
                 {% endfor %}
                 </ol>
+                {% else %}
+                    <p>There are no results to display.</p>
                 {% endif %}
             </div>
         </div>

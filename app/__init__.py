@@ -1,3 +1,6 @@
+# Basic setup and layout of the application was set up with the tutorial
+# https://scotch.io/tutorials/build-a-crud-web-app-with-python-and-flask-part-one
+
 # third-party imports
 from flask import Flask, Response
 from flask_sqlalchemy import SQLAlchemy

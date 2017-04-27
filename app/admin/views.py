@@ -91,7 +91,7 @@ def search():
         student_checksheet = Checksheet.query.filter_by(honors_id=student_honors_id).first()
         if student_checksheet is not None:
             title = "%s's Checksheet" % student_checksheet.firstName #student_honors_id
-            return render_template('home/view-checksheet.html', title=title, checksheet=student_checksheet)
+            return render_template('home/view-checksheet.html', title=title, checksheet=student_checksheet, dates=dates)
         else: 
             flash('Student not found.')
         
@@ -99,7 +99,7 @@ def search():
         student_name = formNameSearch.studentName.data
         student_results = Checksheet.query.filter(Checksheet.lastName.like("%"+student_name+"%")).all()
 
-        return render_template('home/view-search-results.html', title="Search Results", results=student_results)
+        return render_template('home/view-search-results.html', title="Search Results", results=student_results, dates=dates)
 
     return render_template('admin/search.html', title="Search", formSearch=formSearch, formNameSearch=formNameSearch, dates=dates)
 
@@ -109,11 +109,11 @@ def search():
 def view_student_checksheet(honorsid):
     if not current_user.is_admin:
         abort(403)
-    
+    dates = ImportantDate.query.order_by(ImportantDate.date_time)
     student_checksheet = Checksheet.query.filter_by(honors_id=honorsid).first_or_404()
     title = "%s's Checksheet" % student_checksheet.firstName #honorsid
     
-    return render_template('home/view-checksheet.html', checksheet=student_checksheet, title=title)
+    return render_template('home/view-checksheet.html', checksheet=student_checksheet, title=title, dates=dates)
     
 #add an announcement
 @admin.route('/announcement/add', methods=['GET', 'POST'])
