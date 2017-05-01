@@ -14,11 +14,11 @@ class BaseConfig(object):
     MAIL_USE_SSL = True
 
     #gmail authentication
-    MAIL_USERNAME = 'honorsprogram.test'
-    MAIL_PASSWORD = 'H0norsPr0gram'
+    MAIL_USERNAME = ''
+    MAIL_PASSWORD = ''
     
     #mail accounts 
-    MAIL_DEFAULT_SENDER = 'honorsprogram.test@gmail.com'
+    MAIL_DEFAULT_SENDER = ''
     
     
 class DevelopmentConfig(BaseConfig):
